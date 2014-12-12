@@ -7,18 +7,18 @@ import com.hardestfield.game.model.Assets;
 import com.hardestfield.game.view.MainMenuScreen;
 
 public class HardestField extends Game {
-	public SpriteBatch batch;
-	
-	@Override
-	public void create () {
+    public SpriteBatch batch;
+
+    @Override
+    public void create() {
 
         batch = new SpriteBatch();
         Assets.load();
         setScreen(new MainMenuScreen(this));
-	}
+    }
 
-	@Override
-	public void render () {
+    @Override
+    public void render() {
         super.render();
-	}
+    }
 }

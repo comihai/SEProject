@@ -9,18 +9,20 @@ import com.hardestfield.game.model.Assets;
 
 /**
  * Created by mihai on 12/11/2014.
+ * <p/>
+ * This class define the settings for start screen
  */
-public class MainMenuScreen extends ScreenAdapter{
+public class MainMenuScreen extends ScreenAdapter {
     private HardestField game;
     private OrthographicCamera guiCam;
 
     public MainMenuScreen(HardestField game) {
         this.game = game;
-        guiCam = new OrthographicCamera(320,480);
-        guiCam.position.set(320/2,480/2,0);
+        guiCam = new OrthographicCamera(320, 480);
+        guiCam.position.set(320 / 2, 480 / 2, 0);
     }
-    public void draw()
-    {
+
+    public void draw() {
         GL20 gl = Gdx.gl;
         gl.glClearColor(1, 0, 0, 1);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
