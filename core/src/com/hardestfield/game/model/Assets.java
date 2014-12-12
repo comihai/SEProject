@@ -1,8 +1,10 @@
 package com.hardestfield.game.model;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.hardestfield.game.utils.Settings;
 
 /**
  * Created by mihai on 12/11/2014.
@@ -22,6 +24,7 @@ public class Assets {
     public static Texture music;
     public static TextureRegion musicOn;
     public static TextureRegion musicOff;
+    public static Music backgroundMusic;
 
 
     public static Texture loadTexture(String file) {
@@ -43,6 +46,10 @@ public class Assets {
         musicOn = new TextureRegion(music, 0, 0, 64, 64);
         music = loadTexture("musicOff.png");
         musicOff = new TextureRegion(music, 0, 0, 64, 64);
-
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("backgroundMusic.mp3"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(0.5f);
+        if(Settings.musicEnabled)
+            backgroundMusic.play();
     }
 }
