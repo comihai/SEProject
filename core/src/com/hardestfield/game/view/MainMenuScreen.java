@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Rectangle;
 import com.hardestfield.game.HardestField;
 import com.hardestfield.game.model.Assets;
 
@@ -15,11 +16,13 @@ import com.hardestfield.game.model.Assets;
 public class MainMenuScreen extends ScreenAdapter {
     private HardestField game;
     private OrthographicCamera guiCam;
+    private Rectangle playOption;
 
     public MainMenuScreen(HardestField game) {
         this.game = game;
         guiCam = new OrthographicCamera(320, 480);
         guiCam.position.set(320 / 2, 480 / 2, 0);
+        playOption = new Rectangle(160 - 150, 200 + 18, 300, 36);
     }
 
     public void draw() {
@@ -37,7 +40,10 @@ public class MainMenuScreen extends ScreenAdapter {
 
         game.batch.enableBlending();
         game.batch.begin();
-
+        game.batch.draw(Assets.logoRegion, 160 - 274 / 2, 480 - 20 - 142, 274, 142);
+        game.batch.draw(Assets.mainMenuRegion, 10, 210 - 110 / 2, 300, 110);
+        game.batch.draw(Assets.soundOn, 0, 0, 64, 64);
+        game.batch.draw(Assets.musicOn, 250, 0, 64, 64);
         game.batch.end();
     }
 
