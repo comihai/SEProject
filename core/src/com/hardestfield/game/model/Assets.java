@@ -32,24 +32,24 @@ public class Assets {
     }
 
     public static void load() {
-        background = loadTexture("background1.png");
+        background = loadTexture("images/background1.png");
         backgroundRegion = new TextureRegion(background, 0, 0, 320, 480);
-        mainMenu = loadTexture("mainMenu.png");
+        mainMenu = loadTexture("images/mainMenu.png");
         mainMenuRegion = new TextureRegion(mainMenu, 0, 0, 300, 110);
-        logo = loadTexture("logo_bun1.png");
+        logo = loadTexture("images/logo_bun1.png");
         logoRegion = new TextureRegion(logo, 0, 0, 274, 142);
-        sound = loadTexture("soundOn.png");
+        sound = loadTexture("images/soundOn.png");
         soundOn = new TextureRegion(sound, 0, 0, 64, 64);
-        sound = loadTexture("soundOff.png");
+        sound = loadTexture("images/soundOff.png");
         soundOff = new TextureRegion(sound, 0, 0, 64, 64);
-        music = loadTexture("musicOn.png");
+        music = loadTexture("images/musicOn.png");
         musicOn = new TextureRegion(music, 0, 0, 64, 64);
-        music = loadTexture("musicOff.png");
+        music = loadTexture("images/musicOff.png");
         musicOff = new TextureRegion(music, 0, 0, 64, 64);
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("backgroundMusic.mp3"));
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("images/backgroundMusic.mp3"));
         backgroundMusic.setLooping(true);
         backgroundMusic.setVolume(0.5f);
-        if(Settings.musicEnabled)
+        if (Settings.musicEnabled)
             backgroundMusic.play();
     }
 }
