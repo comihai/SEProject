@@ -10,7 +10,10 @@ import com.hardestfield.game.view.MainMenuScreen;
 
 /**
  * Created by mihai on 12/12/2014.
+ *
+ * This is the controller for main menu that manages the user input
  */
+
 public class MainMenuScreenController extends ScreenAdapter {
 
     private MainMenuScreen mms;
@@ -56,7 +59,6 @@ public class MainMenuScreenController extends ScreenAdapter {
                 Gdx.app.exit();
                 return;
             }
-
         }
     }
 
