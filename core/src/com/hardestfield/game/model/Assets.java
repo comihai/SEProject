@@ -25,6 +25,12 @@ public class Assets {
     public static TextureRegion musicOn;
     public static TextureRegion musicOff;
     public static Music backgroundMusic;
+    public static TextureRegion quitRegion;
+    public static Texture quit;
+    public static Texture play;
+    public static TextureRegion playRegion;
+    public static Texture quitGame;
+    public static TextureRegion quitGameRegion;
 
 
     public static Texture loadTexture(String file) {
@@ -51,5 +57,11 @@ public class Assets {
         backgroundMusic.setVolume(0.5f);
         if (Settings.musicEnabled)
             backgroundMusic.play();
+        quit = loadTexture("images/quit.png");
+        quitRegion = new TextureRegion(quit, 0,0, 64,64);
+        play = loadTexture("images/play1.png");
+        playRegion = new TextureRegion(play, 0,0, 64,64);
+        quitGame = loadTexture("images/exit2.png");
+        quitGameRegion = new TextureRegion(quitGame, 0,0,64,64);
     }
 }

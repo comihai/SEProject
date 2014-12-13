@@ -55,6 +55,10 @@ public class MainMenuScreenController extends ScreenAdapter {
                     Assets.backgroundMusic.pause();
                 return;
             }
+            if(mms.getPlayBounds().contains(mms.getTouchPoint().x,mms.getTouchPoint().y))
+            {
+                mms.getGame().setScreen(new PlayScreenController(mms.getGame()));
+            }
             if (mms.getExitBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y)) {
                 Gdx.app.exit();
                 return;
