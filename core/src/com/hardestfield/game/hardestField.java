@@ -3,8 +3,8 @@ package com.hardestfield.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.hardestfield.game.controller.MainMenuScreenController;
 import com.hardestfield.game.model.Assets;
-import com.hardestfield.game.view.MainMenuScreen;
 
 public class HardestField extends Game {
     public SpriteBatch batch;
@@ -14,7 +14,7 @@ public class HardestField extends Game {
 
         batch = new SpriteBatch();
         Assets.load();
-        setScreen(new MainMenuScreen(this));
+        setScreen(new MainMenuScreenController(this));
     }
 
     @Override
