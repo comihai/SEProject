@@ -17,26 +17,29 @@ public class PlayScreen {
     HardestField game;
     OrthographicCamera guiCamera;
     Vector3 touchPoint;
+    Rectangle pauseBounds;
     Rectangle quitBounds;
+    Rectangle resumeBounds;
     int state;
 
-    static int READY = 0;
-    static int RUNNING = 1;
-    static int PAUSED = 2;
-    static int LEVEL_END = 3;
-    static int OVER = 4;
+    static final int READY = 0;
+    static final int RUNNING = 1;
+    static final int PAUSED = 2;
+    static final int LEVEL_END = 3;
+    static final int OVER = 4;
 
     public PlayScreen(HardestField game) {
         this.game = game;
         state = READY;
-        guiCamera = new OrthographicCamera(320,480);
-        guiCamera.position.set(320/2, 480/2, 0);
+        guiCamera = new OrthographicCamera(320, 480);
+        guiCamera.position.set(320 / 2, 480 / 2, 0);
         touchPoint = new Vector3();
-        quitBounds = new Rectangle(277,436,21,24);
+        quitBounds = new Rectangle(275, 438, 21, 20);
+        pauseBounds = new Rectangle(277, 436, 21, 24);
+        resumeBounds = new Rectangle(212, 438, 21, 20);
     }
 
-    public void draw()
-    {
+    public void draw() {
         GL20 gl = Gdx.gl;
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -45,8 +48,28 @@ public class PlayScreen {
         game.batch.enableBlending();
         game.batch.begin();
         game.batch.draw(Assets.backgroundRegion, 0, 0, 320, 480);
-        game.batch.draw(Assets.quit, 320 - 64, 480 - 64, 64, 64);
+
+
+        switch (state) {
+            case READY:
+                break;
+            case RUNNING:
+                running();
+                break;
+            case PAUSED:
+                paused();
+                break;
+        }
         game.batch.end();
+    }
+
+    private void running() {
+        game.batch.draw(Assets.pauseRegion, 320 - 64, 480 - 64, 64, 64);
+    }
+
+    private void paused() {
+        game.batch.draw(Assets.quitGameRegion, 320 - 64, 480 - 64, 64, 64);
+        game.batch.draw(Assets.playRegion, 320 - 128, 480 - 64, 64, 64);
     }
 
     public HardestField getGame() {
@@ -79,5 +102,29 @@ public class PlayScreen {
 
     public void setTouchPoint(Vector3 touchPoint) {
         this.touchPoint = touchPoint;
+    }
+
+    public Rectangle getResumeBounds() {
+        return resumeBounds;
+    }
+
+    public void setResumeBounds(Rectangle resumeBounds) {
+        this.resumeBounds = resumeBounds;
+    }
+
+    public Rectangle getPauseBounds() {
+        return pauseBounds;
+    }
+
+    public void setPauseBounds(Rectangle pauseBounds) {
+        this.pauseBounds = pauseBounds;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }
