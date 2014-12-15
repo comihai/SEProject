@@ -69,7 +69,10 @@ public class PlayScreen {
         game.batch.draw(Assets.clickForStartRegion, 10,50,300,30);
     }
     private void running() {
+
         game.batch.draw(Assets.pauseRegion, 320 - 64, 480 - 64, 64, 64);
+        game.batch.draw(Assets.actorJump, 10,10,32,32);
+        game.batch.draw(Assets.actorFall, 10,100,32,32);
     }
 
     private void paused() {
