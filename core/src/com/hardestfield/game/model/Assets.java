@@ -3,8 +3,10 @@ package com.hardestfield.game.model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.hardestfield.game.utils.Settings;
+
 
 /**
  * Created by mihai on 12/11/2014.
@@ -31,6 +33,11 @@ public class Assets {
     public static TextureRegion playRegion;
     public static Texture quitGame;
     public static TextureRegion quitGameRegion;
+    public static Texture clickForStart;
+    public static TextureRegion clickForStartRegion;
+    public static Texture states;
+    public static Animation actorStatesJump;
+    public static Animation actorStatesFall;
 
 
     public static Texture loadTexture(String file) {
@@ -58,10 +65,15 @@ public class Assets {
         if (Settings.musicEnabled)
             backgroundMusic.play();
         pause = loadTexture("images/quit.png");
-        pauseRegion = new TextureRegion(pause, 0,0, 64,64);
+        pauseRegion = new TextureRegion(pause, 0, 0, 64, 64);
         play = loadTexture("images/play1.png");
-        playRegion = new TextureRegion(play, 0,0, 64,64);
+        playRegion = new TextureRegion(play, 0, 0, 64, 64);
         quitGame = loadTexture("images/exit2.png");
-        quitGameRegion = new TextureRegion(quitGame, 0,0,64,64);
+        quitGameRegion = new TextureRegion(quitGame, 0, 0, 64, 64);
+        clickForStart = loadTexture("images/clickForStart.png");
+        clickForStartRegion = new TextureRegion(clickForStart, 0, 0, 300, 30);
+        states = loadTexture("images/heros.png");
+        actorStatesJump = new Animation(0.2f, new TextureRegion(states,0,0,64,64),new TextureRegion(states,0,0,64,64));
+        actorStatesFall = new Animation(0.2f, new TextureRegion(states,64,0,64,64),new TextureRegion(states,64,0,64,64));
     }
 }

@@ -52,6 +52,7 @@ public class PlayScreen {
 
         switch (state) {
             case READY:
+                ready();
                 break;
             case RUNNING:
                 running();
@@ -63,6 +64,10 @@ public class PlayScreen {
         game.batch.end();
     }
 
+    private void ready()
+    {
+        game.batch.draw(Assets.clickForStartRegion, 10,50,300,30);
+    }
     private void running() {
         game.batch.draw(Assets.pauseRegion, 320 - 64, 480 - 64, 64, 64);
     }
