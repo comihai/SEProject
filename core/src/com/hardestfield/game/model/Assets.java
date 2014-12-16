@@ -51,8 +51,8 @@ public class Assets {
         backgroundRegion = new TextureRegion(background, 0, 0, 320, 480);
         mainMenu = loadTexture("images/mainMenu.png");
         mainMenuRegion = new TextureRegion(mainMenu, 0, 0, 300, 110);
-        logo = loadTexture("images/logo_bun1.png");
-        logoRegion = new TextureRegion(logo, 0, 0, 274, 142);
+        logo = loadTexture("images/logo_final_big.png");
+        logoRegion = new TextureRegion(logo, 0, 0, 548, 284);
         sound = loadTexture("images/soundOn.png");
         soundOn = new TextureRegion(sound, 0, 0, 64, 64);
         sound = loadTexture("images/soundOff.png");
