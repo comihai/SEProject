@@ -47,7 +47,7 @@ public class MainMenuScreen {
         guiCam.update();
         game.batch.setProjectionMatrix(guiCam.combined);
 
-        game.batch.enableBlending();
+        game.batch.disableBlending();
         game.batch.begin();
         game.batch.draw(Assets.backgroundRegion, 0, 0, 320, 480);
         game.batch.end();

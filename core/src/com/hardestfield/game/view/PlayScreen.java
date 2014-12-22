@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.hardestfield.game.HardestField;
+import com.hardestfield.game.controller.AreaController;
 import com.hardestfield.game.model.Assets;
 
 /**
@@ -15,6 +16,8 @@ import com.hardestfield.game.model.Assets;
 public class PlayScreen {
 
     HardestField game;
+    Area areaRenderer;
+    AreaController control;
     OrthographicCamera guiCamera;
     Vector3 touchPoint;
     Rectangle pauseBounds;
@@ -37,17 +40,21 @@ public class PlayScreen {
         quitBounds = new Rectangle(275, 438, 21, 20);
         pauseBounds = new Rectangle(277, 436, 21, 24);
         resumeBounds = new Rectangle(212, 438, 21, 20);
+        control = new AreaController();
+        areaRenderer = new Area(game.batch, control);
     }
 
     public void draw() {
         GL20 gl = Gdx.gl;
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        areaRenderer.render();
+
         guiCamera.update();
         game.batch.setProjectionMatrix(guiCamera.combined);
         game.batch.enableBlending();
         game.batch.begin();
-        game.batch.draw(Assets.backgroundRegion, 0, 0, 320, 480);
+        //game.batch.draw(Assets.backgroundRegion, 0, 0, 320, 480);
 
 
         switch (state) {
@@ -71,8 +78,8 @@ public class PlayScreen {
     private void running() {
 
         game.batch.draw(Assets.pauseRegion, 320 - 64, 480 - 64, 64, 64);
-        game.batch.draw(Assets.actorJump, 10,10,32,32);
-        game.batch.draw(Assets.actorFall, 10,100,32,32);
+        //game.batch.draw(Assets.actorJump, 10,10,32,32);
+        //game.batch.draw(Assets.actorFall, 10,100,32,32);
     }
 
     private void paused() {
@@ -134,5 +141,21 @@ public class PlayScreen {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public Area getAreaRenderer() {
+        return areaRenderer;
+    }
+
+    public void setAreaRenderer(Area areaRenderer) {
+        this.areaRenderer = areaRenderer;
+    }
+
+    public AreaController getControl() {
+        return control;
+    }
+
+    public void setControl(AreaController control) {
+        this.control = control;
     }
 }

@@ -1,6 +1,8 @@
 package com.hardestfield.game.controller;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.hardestfield.game.HardestField;
 import com.hardestfield.game.view.PlayScreen;
@@ -23,15 +25,16 @@ public class PlayScreenController extends ScreenAdapter {
         playScreen = new PlayScreen(game);
     }
 
-    public void update()
+    public void update(float deltaTime)
     {
+        if (deltaTime > 0.1f) deltaTime = 0.1f;
         switch (playScreen.getState())
         {
             case READY:
                 updateReady();
                 break;
             case RUNNING:
-                updateRunning();
+                updateRunning(deltaTime);
                 break;
             case PAUSED:
                 updatePaused();
@@ -45,7 +48,7 @@ public class PlayScreenController extends ScreenAdapter {
             playScreen.setState(RUNNING);
         }
     }
-    private  void updateRunning()
+    private  void updateRunning(float deltaTime)
     {
         if (Gdx.input.justTouched()) {
             playScreen.getGuiCamera().unproject(playScreen.getTouchPoint().set(Gdx.input.getX(), Gdx.input.getY(), 0));
@@ -54,6 +57,17 @@ public class PlayScreenController extends ScreenAdapter {
                 playScreen.setState(PAUSED);
                 return;
             }
+        }
+        Application.ApplicationType appType = Gdx.app.getType();
+
+
+        if (appType == Application.ApplicationType.Android) {
+            playScreen.getControl().update(deltaTime, Gdx.input.getAccelerometerX());
+        } else {
+            float accel = 0;
+            if (Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT)) accel = 5f;
+            if (Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)) accel = -5f;
+            playScreen.getControl().update(deltaTime, accel);
         }
     }
     private void updatePaused () {
@@ -74,7 +88,7 @@ public class PlayScreenController extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        update();
+        update(delta);
         playScreen.draw();
     }
 }
