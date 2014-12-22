@@ -31,8 +31,8 @@ public class MainMenuScreen {
         this.game = game;
         guiCam = new OrthographicCamera(320, 480);
         guiCam.position.set(320 / 2, 480 / 2, 0);
-        soundBounds = new Rectangle(10, 10, 40, 40);
-        musicBounds = new Rectangle(270, 10, 40, 40);
+        soundBounds = new Rectangle(10, 10, 20, 20);
+        musicBounds = new Rectangle(290, 10, 20, 20);
         exitBounds = new Rectangle(128, 165, 55, 18);
         helpBounds = new Rectangle(128, 192, 59, 16);
         highScoresBounds = new Rectangle(96, 211, 129, 15);
@@ -56,8 +56,8 @@ public class MainMenuScreen {
         game.batch.begin();
         game.batch.draw(Assets.logoRegion, 160 - 274 / 2, 480 - 20 - 142, 274, 142);
         game.batch.draw(Assets.mainMenuRegion, 10, 210 - 110 / 2, 300, 110);
-        game.batch.draw(Settings.soundEnabled ? Assets.soundOn : Assets.soundOff, 0, 0, 64, 64);
-        game.batch.draw(Settings.musicEnabled ? Assets.musicOn : Assets.musicOff, 250, 0, 64, 64);
+        game.batch.draw(Settings.soundEnabled ? Assets.soundOn : Assets.soundOff, 0, 0, 40, 40);
+        game.batch.draw(Settings.musicEnabled ? Assets.musicOn : Assets.musicOff, 280, 0, 40, 40);
         game.batch.end();
 
     }

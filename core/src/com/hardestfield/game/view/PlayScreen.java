@@ -37,9 +37,9 @@ public class PlayScreen {
         guiCamera = new OrthographicCamera(320, 480);
         guiCamera.position.set(320 / 2, 480 / 2, 0);
         touchPoint = new Vector3();
-        quitBounds = new Rectangle(275, 438, 21, 20);
-        pauseBounds = new Rectangle(277, 436, 21, 24);
-        resumeBounds = new Rectangle(212, 438, 21, 20);
+        quitBounds = new Rectangle(290, 450, 12, 12);
+        pauseBounds = new Rectangle(290, 450, 11, 11);
+        resumeBounds = new Rectangle(250, 450, 12, 12);
         control = new AreaController();
         areaRenderer = new Area(game.batch, control);
     }
@@ -76,15 +76,12 @@ public class PlayScreen {
         game.batch.draw(Assets.clickForStartRegion, 10,50,300,30);
     }
     private void running() {
-
-        game.batch.draw(Assets.pauseRegion, 320 - 64, 480 - 64, 64, 64);
-        //game.batch.draw(Assets.actorJump, 10,10,32,32);
-        //game.batch.draw(Assets.actorFall, 10,100,32,32);
+        game.batch.draw(Assets.pauseRegion, 340 - 64, 500 - 64, 40, 40);
     }
 
     private void paused() {
-        game.batch.draw(Assets.quitGameRegion, 320 - 64, 480 - 64, 64, 64);
-        game.batch.draw(Assets.playRegion, 320 - 128, 480 - 64, 64, 64);
+        game.batch.draw(Assets.quitGameRegion, 340 - 64, 500 - 64, 40, 40);
+        game.batch.draw(Assets.playRegion, 340 - 104, 500 - 64, 40, 40);
     }
 
     public HardestField getGame() {

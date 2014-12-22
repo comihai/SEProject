@@ -68,9 +68,9 @@ public class Assets {
             backgroundMusic.play();
         pause = loadTexture("images/quit.png");
         pauseRegion = new TextureRegion(pause, 0, 0, 64, 64);
-        play = loadTexture("images/play1.png");
+        play = loadTexture("images/play.png");
         playRegion = new TextureRegion(play, 0, 0, 64, 64);
-        quitGame = loadTexture("images/exit2.png");
+        quitGame = loadTexture("images/exit.png");
         quitGameRegion = new TextureRegion(quitGame, 0, 0, 64, 64);
         clickForStart = loadTexture("images/clickForStart.png");
         clickForStartRegion = new TextureRegion(clickForStart, 0, 0, 300, 30);
