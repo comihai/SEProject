@@ -17,14 +17,14 @@ public class Squirrel extends DynamicGameObject {
     public static final float JUMP_VELOCITY = 11;
     public static final float MOVE_VELOCITY = 20;
 
-    public Squirrel (float x, float y) {
+    public Squirrel(float x, float y) {
         super(x, y, SQUIRREL_WIDTH, SQUIRREL_HEIGHT);
         state = STATE_JUMP;
         stateTime = 0;
     }
-    public void update(float deltaTime)
-    {
-        speed.add(AreaController.gravity.x*deltaTime, AreaController.gravity.y*deltaTime);
+
+    public void update(float deltaTime) {
+        speed.add(AreaController.gravity.x * deltaTime, AreaController.gravity.y * deltaTime);
         position.add(speed.x * deltaTime, speed.y * deltaTime);
         bounds.x = position.x - bounds.width / 2;
         bounds.y = position.y - bounds.height / 2;

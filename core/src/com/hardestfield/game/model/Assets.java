@@ -40,6 +40,7 @@ public class Assets {
     public static Animation actorStatesFall;
     public static TextureRegion actorJump;
     public static TextureRegion actorFall;
+    public static TextureRegion actorHit;
 
 
     public static Texture loadTexture(String file) {
@@ -75,9 +76,10 @@ public class Assets {
         clickForStart = loadTexture("images/clickForStart.png");
         clickForStartRegion = new TextureRegion(clickForStart, 0, 0, 300, 30);
         states = loadTexture("images/heros.png");
-        actorJump = new TextureRegion(states,0,0,64,64);
-        actorFall = new TextureRegion(states,64,0,64,64);
-        actorStatesJump = new Animation(0.2f, new TextureRegion(states,0,0,64,64),new TextureRegion(states,0,0,64,64));
-        actorStatesFall = new Animation(0.2f, new TextureRegion(states,64,0,64,64),new TextureRegion(states,64,0,64,64));
+        actorJump = new TextureRegion(states, 0, 0, 64, 64);
+        actorFall = new TextureRegion(states, 64, 0, 64, 64);
+        actorHit = new TextureRegion(states, 192, 0, 64, 64);
+        actorStatesJump = new Animation(0.2f, new TextureRegion(states, 0, 0, 64, 64), new TextureRegion(states, 0, 0, 64, 64));
+        actorStatesFall = new Animation(0.3f, new TextureRegion(states, 64, 0, 64, 64), new TextureRegion(states, 128, 0, 64, 64));
     }
 }

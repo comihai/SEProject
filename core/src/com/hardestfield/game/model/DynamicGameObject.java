@@ -10,7 +10,7 @@ public class DynamicGameObject extends GameObject {
     public Vector2 speed;
     public Vector2 acceleration;
 
-    public DynamicGameObject (float x, float y, float width, float height) {
+    public DynamicGameObject(float x, float y, float width, float height) {
         super(x, y, width, height);
         speed = new Vector2();
         acceleration = new Vector2();

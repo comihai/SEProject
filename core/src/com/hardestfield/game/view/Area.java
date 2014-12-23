@@ -10,7 +10,7 @@ import com.hardestfield.game.utils.Animation;
 
 /**
  * Created by mihai on 12/20/2014.
- *
+ * <p/>
  * THis class keeps all the details of the game
  */
 
@@ -22,14 +22,14 @@ public class Area {
     OrthographicCamera cam;
     SpriteBatch batch;
 
-    public Area (SpriteBatch batch, AreaController area) {
+    public Area(SpriteBatch batch, AreaController area) {
         this.area = area;
         this.cam = new OrthographicCamera(REND_WIDTH, REND_HEIGHT);
         this.cam.position.set(REND_WIDTH / 2, REND_HEIGHT / 2, 0);
         this.batch = batch;
     }
 
-    public void render () {
+    public void render() {
         if (area.squirrel.position.y > cam.position.y) cam.position.y = area.squirrel.position.y;
         cam.update();
         batch.setProjectionMatrix(cam.combined);
@@ -37,7 +37,7 @@ public class Area {
         renderObjects();
     }
 
-    public void renderBackground () {
+    public void renderBackground() {
         batch.disableBlending();
         batch.begin();
         batch.draw(Assets.backgroundRegion, cam.position.x - REND_WIDTH / 2, cam.position.y - REND_HEIGHT / 2, REND_WIDTH,
@@ -45,14 +45,14 @@ public class Area {
         batch.end();
     }
 
-    public void renderObjects () {
+    public void renderObjects() {
         batch.enableBlending();
         batch.begin();
         renderSquirrel();
         batch.end();
     }
 
-    private void renderSquirrel () {
+    private void renderSquirrel() {
         TextureRegion keyFrame;
         switch (area.squirrel.getState()) {
             case Squirrel.STATE_FALL:
@@ -72,9 +72,6 @@ public class Area {
         else
             batch.draw(keyFrame, area.squirrel.position.x - 0.5f, area.squirrel.position.y - 0.5f, side * 1, 1);
     }
-
-
-
 
 
 }

@@ -25,11 +25,9 @@ public class PlayScreenController extends ScreenAdapter {
         playScreen = new PlayScreen(game);
     }
 
-    public void update(float deltaTime)
-    {
+    public void update(float deltaTime) {
         if (deltaTime > 0.1f) deltaTime = 0.1f;
-        switch (playScreen.getState())
-        {
+        switch (playScreen.getState()) {
             case READY:
                 updateReady();
                 break;
@@ -42,14 +40,14 @@ public class PlayScreenController extends ScreenAdapter {
         }
 
     }
-    private void updateReady()
-    {
+
+    private void updateReady() {
         if (Gdx.input.justTouched()) {
             playScreen.setState(RUNNING);
         }
     }
-    private  void updateRunning(float deltaTime)
-    {
+
+    private void updateRunning(float deltaTime) {
         if (Gdx.input.justTouched()) {
             playScreen.getGuiCamera().unproject(playScreen.getTouchPoint().set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
@@ -70,7 +68,8 @@ public class PlayScreenController extends ScreenAdapter {
             playScreen.getControl().update(deltaTime, accel);
         }
     }
-    private void updatePaused () {
+
+    private void updatePaused() {
         if (Gdx.input.justTouched()) {
             playScreen.getGuiCamera().unproject(playScreen.getTouchPoint().set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
