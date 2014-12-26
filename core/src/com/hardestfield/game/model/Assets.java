@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.hardestfield.game.utils.Settings;
 
@@ -41,6 +42,9 @@ public class Assets {
     public static TextureRegion actorJump;
     public static TextureRegion actorFall;
     public static TextureRegion actorHit;
+    public static BitmapFont font;
+    public static TextureRegion highScoresRegion;
+    public static Texture items;
 
 
     public static Texture loadTexture(String file) {
@@ -81,5 +85,7 @@ public class Assets {
         actorHit = new TextureRegion(states, 192, 0, 64, 64);
         actorStatesJump = new Animation(0.2f, new TextureRegion(states, 0, 0, 64, 64), new TextureRegion(states, 0, 0, 64, 64));
         actorStatesFall = new Animation(0.3f, new TextureRegion(states, 64, 0, 64, 64), new TextureRegion(states, 128, 0, 64, 64));
+        font = new BitmapFont(Gdx.files.internal("images/font.fnt"), Gdx.files.internal("images/font.png"), false);
+        highScoresRegion = new TextureRegion(mainMenu, 80, 35, 140, 20);
     }
 }

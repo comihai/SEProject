@@ -20,9 +20,14 @@ public class PlayScreenController extends ScreenAdapter {
     static final int PAUSED = 2;
     static final int LEVEL_END = 3;
     static final int OVER = 4;
+    int lastScore;
+
 
     public PlayScreenController(HardestField game) {
+
         playScreen = new PlayScreen(game);
+        lastScore = 0;
+        playScreen.setScoreString("SCORE : 0");
     }
 
     public void update(float deltaTime) {
@@ -66,6 +71,11 @@ public class PlayScreenController extends ScreenAdapter {
             if (Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT)) accel = 5f;
             if (Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)) accel = -5f;
             playScreen.getControl().update(deltaTime, accel);
+        }
+        if(playScreen.getControl().getScore() != lastScore)
+        {
+            lastScore = playScreen.getControl().getScore();
+            playScreen.setScoreString("SCORE : " + lastScore);
         }
     }
 

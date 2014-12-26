@@ -18,6 +18,7 @@ public class AreaController {
     public static final int STATE_GAME_OVER = 2;
     public final Squirrel squirrel;
     int state;
+    int score;
     float heightSoFar;
 
     public AreaController() {
@@ -28,7 +29,10 @@ public class AreaController {
     }
 
     public void update(float deltaTime, float accelX) {
+
         updateSquirrel(deltaTime, accelX);
+        if(squirrel.getState()  != Squirrel.STATE_HIT)
+            score++;
     }
 
     private void updateSquirrel(float deltaTime, float accelX) {
@@ -41,5 +45,14 @@ public class AreaController {
             squirrel.speed.x = -accelX / 10 * Squirrel.MOVE_VELOCITY;
         squirrel.update(deltaTime);
 
+    }
+
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

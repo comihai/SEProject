@@ -24,6 +24,7 @@ public class PlayScreen {
     Rectangle quitBounds;
     Rectangle resumeBounds;
     int state;
+    String scoreString;
 
     static final int READY = 0;
     static final int RUNNING = 1;
@@ -45,6 +46,7 @@ public class PlayScreen {
     }
 
     public void draw() {
+
         GL20 gl = Gdx.gl;
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -54,7 +56,6 @@ public class PlayScreen {
         game.batch.setProjectionMatrix(guiCamera.combined);
         game.batch.enableBlending();
         game.batch.begin();
-        //game.batch.draw(Assets.backgroundRegion, 0, 0, 320, 480);
 
 
         switch (state) {
@@ -76,7 +77,9 @@ public class PlayScreen {
     }
 
     private void running() {
+
         game.batch.draw(Assets.pauseRegion, 340 - 64, 500 - 64, 40, 40);
+        Assets.font.draw(game.batch, scoreString, 10, 465);
     }
 
     private void paused() {
@@ -144,6 +147,7 @@ public class PlayScreen {
         return areaRenderer;
     }
 
+
     public void setAreaRenderer(Area areaRenderer) {
         this.areaRenderer = areaRenderer;
     }
@@ -154,5 +158,13 @@ public class PlayScreen {
 
     public void setControl(AreaController control) {
         this.control = control;
+    }
+
+    public String getScoreString() {
+        return scoreString;
+    }
+
+    public void setScoreString(String scoreString) {
+        this.scoreString = scoreString;
     }
 }

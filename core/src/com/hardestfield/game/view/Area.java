@@ -22,6 +22,7 @@ public class Area {
     OrthographicCamera cam;
     SpriteBatch batch;
 
+
     public Area(SpriteBatch batch, AreaController area) {
         this.area = area;
         this.cam = new OrthographicCamera(REND_WIDTH, REND_HEIGHT);

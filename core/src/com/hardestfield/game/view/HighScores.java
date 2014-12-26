@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.hardestfield.game.HardestField;
 import com.hardestfield.game.model.Assets;
+import com.hardestfield.game.utils.Settings;
 
 /**
  * Created by mihai on 12/23/2014.
@@ -25,11 +26,12 @@ public class HighScores {
         backBounds = new Rectangle(0, 0, 40, 40);
         guiCam = new OrthographicCamera(320, 480);
         guiCam.position.set(160, 240, 0);
-        scores = new String[5];
-        for (int i = 0; i < 5; i++) {
-            scores[i] = i+1+") ";
-
+        scores = new String[7];
+        for (int i = 0; i < 7; i++) {
+            scores[i] = i + 1 + ") " + Settings.highScores[i];
+            offset = Math.max(Assets.font.getBounds(scores[i]).width, offset);
         }
+        offset = 160 - offset / 2 + Assets.font.getSpaceWidth() / 2;
     }
     public void draw()
     {
@@ -45,7 +47,13 @@ public class HighScores {
 
         game.batch.enableBlending();
         game.batch.begin();
+        game.batch.draw(Assets.highScoresRegion, 5, 420, 300, 30);
 
+        float y = 230;
+        for (int i = 6; i >= 0; i--) {
+            Assets.font.draw(game.batch, scores[i], offset, y);
+            y += Assets.font.getLineHeight();
+        }
 
 
 

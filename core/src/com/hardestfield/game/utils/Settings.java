@@ -19,7 +19,7 @@ public class Settings {
         try
         {
             FileHandle fileHandle = Gdx.files.external(file);
-            String[] strings = fileHandle.readString().split("\n");
+            String[] strings = fileHandle.readString().split("\r\n");
             soundEnabled = Boolean.parseBoolean(strings[0]);
             musicEnabled = Boolean.parseBoolean(strings[1]);
             for (int i = 0; i < 7; i++) {
