@@ -44,7 +44,8 @@ public class Assets {
     public static TextureRegion actorHit;
     public static BitmapFont font;
     public static TextureRegion highScoresRegion;
-    public static Texture items;
+    public static Texture statesBat;
+    public static Animation batFly;
 
 
     public static Texture loadTexture(String file) {
@@ -87,5 +88,7 @@ public class Assets {
         actorStatesFall = new Animation(0.3f, new TextureRegion(states, 64, 0, 64, 64), new TextureRegion(states, 128, 0, 64, 64));
         font = new BitmapFont(Gdx.files.internal("images/font.fnt"), Gdx.files.internal("images/font.png"), false);
         highScoresRegion = new TextureRegion(mainMenu, 80, 35, 140, 20);
+        statesBat = loadTexture("images/enemies1.png");
+        batFly = new Animation(0.2f, new TextureRegion(statesBat, 0,0,64,64), new TextureRegion(statesBat, 128,0,64,64));
     }
 }

@@ -1,6 +1,7 @@
 package com.hardestfield.game.controller;
 
 import com.badlogic.gdx.math.Vector2;
+import com.hardestfield.game.model.Bat;
 import com.hardestfield.game.model.Squirrel;
 
 /**
@@ -17,13 +18,14 @@ public class AreaController {
     public static final int STATE_NEXT_LEVEL = 1;
     public static final int STATE_GAME_OVER = 2;
     public final Squirrel squirrel;
+    public final Bat bat;
     int state;
     int score;
     float heightSoFar;
 
     public AreaController() {
         this.squirrel = new Squirrel(5, 1);
-
+        this.bat = new Bat(0,20);
         this.heightSoFar = 0;
         this.state = STATE_RUNNING;
     }
@@ -31,6 +33,7 @@ public class AreaController {
     public void update(float deltaTime, float accelX) {
 
         updateSquirrel(deltaTime, accelX);
+        updateBat(deltaTime);
         if(squirrel.getState()  != Squirrel.STATE_HIT)
             score++;
     }
@@ -45,6 +48,10 @@ public class AreaController {
             squirrel.speed.x = -accelX / 10 * Squirrel.MOVE_VELOCITY;
         squirrel.update(deltaTime);
 
+    }
+    private void updateBat(float deltaTime)
+    {
+        bat.update(deltaTime);
     }
 
 
