@@ -46,6 +46,8 @@ public class Assets {
     public static TextureRegion highScoresRegion;
     public static Texture statesBat;
     public static Animation batFly;
+    public static Texture treeBranch;
+    public static TextureRegion treeBranchRegion;
 
 
     public static Texture loadTexture(String file) {
@@ -90,5 +92,7 @@ public class Assets {
         highScoresRegion = new TextureRegion(mainMenu, 80, 35, 140, 20);
         statesBat = loadTexture("images/enemies1.png");
         batFly = new Animation(0.2f, new TextureRegion(statesBat, 0, 0, 110, 100), new TextureRegion(statesBat, 110, 0, 110, 100));
+        treeBranch = loadTexture("images/tree.png");
+        treeBranchRegion = new TextureRegion(treeBranch, 0, 0, 1280, 444);
     }
 }

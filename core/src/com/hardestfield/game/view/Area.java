@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.hardestfield.game.controller.AreaController;
 import com.hardestfield.game.model.Assets;
+import com.hardestfield.game.model.Bat;
 import com.hardestfield.game.model.Squirrel;
 import com.hardestfield.game.utils.Animation;
 
@@ -68,7 +69,7 @@ public class Area {
                 keyFrame = Assets.actorFall;
         }
 
-        float side = area.squirrel.speed.x < 0 ? -1 : 1;
+        float side = area.squirrel.speed.x < 0 ? 1 : -1;
         if (side < 0)
             batch.draw(keyFrame, area.squirrel.position.x + 0.5f, area.squirrel.position.y - 0.5f, side * 1, 1);
         else
@@ -76,12 +77,16 @@ public class Area {
     }
     private void renderBat()
     {
-        TextureRegion keyFrame = Assets.batFly.getKeyFrame(area.bat.getStateTime(), Animation.ANIMATION_LOOPING);
-        float side = area.bat.speed.x < 0 ? 1 : -1;
-        if (side < 0)
-            batch.draw(keyFrame, area.bat.position.x + 0.5f, area.bat.position.y - 0.5f, side * 1, 1);
-        else
-            batch.draw(keyFrame, area.bat.position.x - 0.5f, area.bat.position.y - 0.5f, side * 1, 1);
+        int len = area.bats.size();
+        for (int i = 0; i < len; i++) {
+            Bat bat = area.bats.get(i);
+            TextureRegion keyFrame = Assets.batFly.getKeyFrame(bat.getStateTime(), Animation.ANIMATION_LOOPING);
+            float side = bat.speed.x < 0 ? 1 : -1;
+            if (side < 0)
+                batch.draw(keyFrame, bat.position.x + 0.5f, bat.position.y - 0.5f, side * 1, 1);
+            else
+                batch.draw(keyFrame, bat.position.x - 0.5f, bat.position.y - 0.5f, side * 1, 1);
+        }
     }
 
 }
