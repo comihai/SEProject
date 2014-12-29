@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * This class return one frame of the animation
  */
 public class Animation {
-    public static final boolean ANIMATION_LOOPING = false;
-    public static final boolean ANIMATION_NONLOOPING = true;
+    public static final boolean ANIMATION_NONLOOPING = false;
+    public static final boolean ANIMATION_LOOPING = true;
 
     final TextureRegion[] keyFrames;
     final float frameDuration;

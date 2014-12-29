@@ -89,6 +89,6 @@ public class Assets {
         font = new BitmapFont(Gdx.files.internal("images/font.fnt"), Gdx.files.internal("images/font.png"), false);
         highScoresRegion = new TextureRegion(mainMenu, 80, 35, 140, 20);
         statesBat = loadTexture("images/enemies1.png");
-        batFly = new Animation(0.2f, new TextureRegion(statesBat, 0,0,64,64), new TextureRegion(statesBat, 128,0,64,64));
+        batFly = new Animation(0.2f, new TextureRegion(statesBat, 0, 0, 110, 100), new TextureRegion(statesBat, 110, 0, 110, 100));
     }
 }

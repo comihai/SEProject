@@ -34,4 +34,12 @@ public class Bat extends DynamicGameObject {
         }
         stateTime += deltaTime;
     }
+
+    public float getStateTime() {
+        return stateTime;
+    }
+
+    public void setStateTime(float stateTime) {
+        this.stateTime = stateTime;
+    }
 }

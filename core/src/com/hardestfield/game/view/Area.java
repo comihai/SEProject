@@ -50,6 +50,7 @@ public class Area {
         batch.enableBlending();
         batch.begin();
         renderSquirrel();
+        renderBat();
         batch.end();
     }
 
@@ -73,6 +74,14 @@ public class Area {
         else
             batch.draw(keyFrame, area.squirrel.position.x - 0.5f, area.squirrel.position.y - 0.5f, side * 1, 1);
     }
-
+    private void renderBat()
+    {
+        TextureRegion keyFrame = Assets.batFly.getKeyFrame(area.bat.getStateTime(), Animation.ANIMATION_LOOPING);
+        float side = area.bat.speed.x < 0 ? 1 : -1;
+        if (side < 0)
+            batch.draw(keyFrame, area.bat.position.x + 0.5f, area.bat.position.y - 0.5f, side * 1, 1);
+        else
+            batch.draw(keyFrame, area.bat.position.x - 0.5f, area.bat.position.y - 0.5f, side * 1, 1);
+    }
 
 }

@@ -19,13 +19,13 @@ public class AreaController {
     public static final int STATE_GAME_OVER = 2;
     public final Squirrel squirrel;
     public final Bat bat;
-    int state;
-    int score;
+    int state = STATE_RUNNING;
+    int score = 0;
     float heightSoFar;
 
     public AreaController() {
         this.squirrel = new Squirrel(5, 1);
-        this.bat = new Bat(0,20);
+        this.bat = new Bat(5,5);
         this.heightSoFar = 0;
         this.state = STATE_RUNNING;
     }
@@ -34,7 +34,7 @@ public class AreaController {
 
         updateSquirrel(deltaTime, accelX);
         updateBat(deltaTime);
-        if(squirrel.getState()  != Squirrel.STATE_HIT)
+        if(squirrel.getState()!= Squirrel.STATE_HIT)
             score++;
     }
 
