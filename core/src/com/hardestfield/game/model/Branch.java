@@ -48,4 +48,27 @@ public class Branch extends DynamicGameObject{
         stateTime += deltaTime;
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public float getStateTime() {
+        return stateTime;
+    }
+
+    public void setStateTime(float stateTime) {
+        this.stateTime = stateTime;
+    }
 }

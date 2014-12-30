@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.hardestfield.game.controller.AreaController;
 import com.hardestfield.game.model.Assets;
 import com.hardestfield.game.model.Bat;
+import com.hardestfield.game.model.Branch;
 import com.hardestfield.game.model.Squirrel;
 import com.hardestfield.game.utils.Animation;
 
@@ -52,6 +53,7 @@ public class Area {
         batch.begin();
         renderSquirrel();
         renderBat();
+        renderBranch();
         batch.end();
     }
 
@@ -86,6 +88,15 @@ public class Area {
                 batch.draw(keyFrame, bat.position.x + 0.5f, bat.position.y - 0.5f, side * 1, 1);
             else
                 batch.draw(keyFrame, bat.position.x - 0.5f, bat.position.y - 0.5f, side * 1, 1);
+        }
+    }
+    private void renderBranch()
+    {
+        int len = area.branches.size();
+        for (int i = 0; i < len; i++) {
+            Branch branch = area.branches.get(i);
+            TextureRegion keyFrame = Assets.treeBranchRegion;
+            batch.draw(keyFrame, branch.position.x - 1, branch.position.y - 0.25f, 2, 0.5f);
         }
     }
 
