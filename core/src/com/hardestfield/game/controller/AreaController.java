@@ -1,10 +1,7 @@
 package com.hardestfield.game.controller;
 
 import com.badlogic.gdx.math.Vector2;
-import com.hardestfield.game.model.Bat;
-import com.hardestfield.game.model.Beehive;
-import com.hardestfield.game.model.Branch;
-import com.hardestfield.game.model.Squirrel;
+import com.hardestfield.game.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +25,8 @@ public class AreaController {
     public final Squirrel squirrel;
     public final List<Bat> bats;
     public final List<Branch> branches;
-    public final Beehive beehive;
+    public final List<Beehive> beehives;
+    public final List<Acorn> acorns;
     public final Random rand;
     int state = STATE_RUNNING;
     int score = 0;
@@ -38,7 +36,8 @@ public class AreaController {
         this.squirrel = new Squirrel(5, 1);
         this.bats = new ArrayList<Bat>();
         this.branches = new ArrayList<Branch>();
-        this.beehive = new Beehive(7,7);
+        this.beehives = new ArrayList<Beehive>();
+        this.acorns = new ArrayList<Acorn>();
         this.heightSoFar = 0;
         this.state = STATE_RUNNING;
         rand = new Random();
@@ -49,6 +48,16 @@ public class AreaController {
     private void generateBat(float x, float y) {
         Bat bat = new Bat(x + rand.nextFloat(), y + Bat.BAT_HEIGHT + rand.nextFloat() * 2);
         bats.add(bat);
+    }
+    private void generateBeehive(float x, float y)
+    {
+        Beehive beehive = new Beehive(x,y+Branch.BRANCH_HEIGHT/2+Beehive.BEEHIVE_HEIGHT/2);
+        beehives.add(beehive);
+    }
+    private void generateAcorn(float x, float y)
+    {
+        Acorn acorn = new Acorn(x + rand.nextFloat(), y+Acorn.ACORN_HEIGHT + rand.nextFloat() * 3);
+        acorns.add(acorn);
     }
 
     private void generateBranches() {
@@ -63,6 +72,12 @@ public class AreaController {
             if (y > AREA_HEIGHT / 3 && rand.nextFloat() > 0.7f) {
                 generateBat(x, y);
             }
+            if (rand.nextFloat() > 0.9f && type != Branch.BRANCH_TYPE_MOVING) {
+                generateBeehive(x,y);
+            }
+            if (rand.nextFloat() > 0.6f) {
+                generateAcorn(x,y);
+            }
 
             y += (maxJumpHeight - rand.nextFloat() * (maxJumpHeight / 3));
         }
@@ -73,6 +88,7 @@ public class AreaController {
         updateSquirrel(deltaTime, accelX);
         updateBats(deltaTime);
         updateBranches(deltaTime);
+        updateAcorns(deltaTime);
         if (squirrel.getState() != Squirrel.STATE_HIT) {
             score++;
             checkCollisions();
@@ -106,10 +122,18 @@ public class AreaController {
             branch.update(deltaTime);
         }
     }
+    private void updateAcorns(float deltaTime)
+    {
+        int len = acorns.size();
+        for (int i = 0; i < len; i++) {
+            Acorn acorn = acorns.get(i);
+            acorn.update(deltaTime);
+        }
+    }
 
     private void checkCollisions() {
         checkBranchesCollisions();
-        checkBeehiveCollisions();
+        checkBeehivesCollisions();
     }
 
     private void checkBranchesCollisions() {
@@ -125,12 +149,16 @@ public class AreaController {
             }
         }
     }
-    private void checkBeehiveCollisions()
+    private void checkBeehivesCollisions()
     {
         if (squirrel.speed.y > 0) return;
-        if (squirrel.position.y > beehive.position.y) {
-            if (squirrel.bounds.overlaps(beehive.bounds)) {
-                squirrel.hitBeehive();
+        int len = beehives.size();
+        for (int i = 0; i < len; i++) {
+            Beehive beehive = beehives.get(i);
+            if (squirrel.position.y > beehive.position.y) {
+                if (squirrel.bounds.overlaps(beehive.bounds)) {
+                    squirrel.hitBeehive();
+                }
             }
         }
     }

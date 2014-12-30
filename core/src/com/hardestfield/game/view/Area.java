@@ -4,10 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.hardestfield.game.controller.AreaController;
-import com.hardestfield.game.model.Assets;
-import com.hardestfield.game.model.Bat;
-import com.hardestfield.game.model.Branch;
-import com.hardestfield.game.model.Squirrel;
+import com.hardestfield.game.model.*;
 import com.hardestfield.game.utils.Animation;
 
 /**
@@ -55,6 +52,7 @@ public class Area {
         renderBat();
         renderBranch();
         renderBeehive();
+        renderAcorn();
         batch.end();
     }
 
@@ -102,7 +100,20 @@ public class Area {
     }
     private void renderBeehive()
     {
-        batch.draw(Assets.beehaveRegion, area.beehive.position.x - 0.5f, area.beehive.position.y - 0.5f, 0.7f, 0.7f);
+        int len = area.beehives.size();
+        for (int i = 0; i < len; i++) {
+            Beehive beehive = area.beehives.get(i);
+            batch.draw(Assets.beehaveRegion, beehive.position.x - 0.5f, beehive.position.y - 0.5f, 0.7f, 0.7f);
+        }
+
+    }
+    private void renderAcorn()
+    {
+        int len = area.acorns.size();
+        for (int i = 0; i < len; i++) {
+            Acorn acorn = area.acorns.get(i);
+            batch.draw(Assets.acornRegion, acorn.position.x - 0.5f, acorn.position.y - 0.5f, 0.5f, 0.8f);
+        }
     }
 
 }

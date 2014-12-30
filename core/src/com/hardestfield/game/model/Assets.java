@@ -50,6 +50,8 @@ public class Assets {
     public static TextureRegion treeBranchRegion;
     public static Texture beehave;
     public static TextureRegion beehaveRegion;
+    public static Texture acorn;
+    public static TextureRegion acornRegion;
 
 
     public static Texture loadTexture(String file) {
@@ -98,7 +100,8 @@ public class Assets {
         treeBranchRegion = new TextureRegion(treeBranch, 0, 0, 1280, 444);
         beehave = loadTexture("images/beehive.png");
         beehaveRegion = new TextureRegion(beehave, 0, 0, 512, 512);
-
+        acorn = loadTexture("images/acorn.png");
+        acornRegion = new TextureRegion(acorn, 0, 0, 444, 700);
 
     }
 }
