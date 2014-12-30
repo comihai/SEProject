@@ -54,6 +54,7 @@ public class Area {
         renderSquirrel();
         renderBat();
         renderBranch();
+        renderBeehive();
         batch.end();
     }
 
@@ -98,6 +99,10 @@ public class Area {
             TextureRegion keyFrame = Assets.treeBranchRegion;
             batch.draw(keyFrame, branch.position.x - 1, branch.position.y - 0.25f, 2, 0.5f);
         }
+    }
+    private void renderBeehive()
+    {
+        batch.draw(Assets.beehaveRegion, area.beehive.position.x - 0.5f, area.beehive.position.y - 0.5f, 0.7f, 0.7f);
     }
 
 }

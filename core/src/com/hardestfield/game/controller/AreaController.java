@@ -2,6 +2,7 @@ package com.hardestfield.game.controller;
 
 import com.badlogic.gdx.math.Vector2;
 import com.hardestfield.game.model.Bat;
+import com.hardestfield.game.model.Beehive;
 import com.hardestfield.game.model.Branch;
 import com.hardestfield.game.model.Squirrel;
 
@@ -27,6 +28,7 @@ public class AreaController {
     public final Squirrel squirrel;
     public final List<Bat> bats;
     public final List<Branch> branches;
+    public final Beehive beehive;
     public final Random rand;
     int state = STATE_RUNNING;
     int score = 0;
@@ -36,28 +38,33 @@ public class AreaController {
         this.squirrel = new Squirrel(5, 1);
         this.bats = new ArrayList<Bat>();
         this.branches = new ArrayList<Branch>();
+        this.beehive = new Beehive(7,7);
         this.heightSoFar = 0;
         this.state = STATE_RUNNING;
         rand = new Random();
-        generateBats();
         generateBranches();
 
     }
-    private void generateBats()
-    {
-        for (int i = 0; i < 7; i++) {
-            Bat bat = new Bat(rand.nextInt(10),6+i);
-            bats.add(bat);
-        }
+
+    private void generateBat(float x, float y) {
+        Bat bat = new Bat(x + rand.nextFloat(), y + Bat.BAT_HEIGHT + rand.nextFloat() * 2);
+        bats.add(bat);
     }
-    private void generateBranches()
-    {
-        int type = Branch.BRANCH_TYPE_MOVING;
-        float x;
-        for (int i = 0; i < 2; i++) {
-            x = rand.nextFloat() * (AREA_WIDTH - Branch.BRANCH_WIDTH) + Branch.BRANCH_WIDTH / 2;
-            Branch branch = new Branch(type,x, 5+2*i);
+
+    private void generateBranches() {
+        float y = 5;
+        float maxJumpHeight = Squirrel.JUMP_VELOCITY * Squirrel.JUMP_VELOCITY / (2 * -gravity.y);
+        while (y < AREA_HEIGHT) {
+            int type = rand.nextFloat() > 0.7f ? Branch.BRANCH_TYPE_MOVING : Branch.BRANCH_TYPE_STATIC;
+            float x = rand.nextFloat() * (AREA_WIDTH - Branch.BRANCH_WIDTH) + Branch.BRANCH_WIDTH / 2;
+            Branch branch = new Branch(type, x, y);
             branches.add(branch);
+
+            if (y > AREA_HEIGHT / 3 && rand.nextFloat() > 0.7f) {
+                generateBat(x, y);
+            }
+
+            y += (maxJumpHeight - rand.nextFloat() * (maxJumpHeight / 3));
         }
     }
 
@@ -66,8 +73,10 @@ public class AreaController {
         updateSquirrel(deltaTime, accelX);
         updateBats(deltaTime);
         updateBranches(deltaTime);
-        if(squirrel.getState()!= Squirrel.STATE_HIT)
+        if (squirrel.getState() != Squirrel.STATE_HIT) {
             score++;
+            checkCollisions();
+        }
     }
 
     private void updateSquirrel(float deltaTime, float accelX) {
@@ -81,20 +90,48 @@ public class AreaController {
         squirrel.update(deltaTime);
 
     }
-    private void updateBats(float deltaTime)
-    {
+
+    private void updateBats(float deltaTime) {
         int len = bats.size();
         for (int i = 0; i < len; i++) {
             Bat bat = bats.get(i);
-            bat.update(deltaTime);
+            bat.update(deltaTime, rand.nextFloat() * 2);
         }
     }
-    private void updateBranches(float deltaTime)
-    {
+
+    private void updateBranches(float deltaTime) {
         int len = branches.size();
         for (int i = 0; i < len; i++) {
             Branch branch = branches.get(i);
             branch.update(deltaTime);
+        }
+    }
+
+    private void checkCollisions() {
+        checkBranchesCollisions();
+        checkBeehiveCollisions();
+    }
+
+    private void checkBranchesCollisions() {
+        if (squirrel.speed.y > 0) return;
+        int len = branches.size();
+        for (int i = 0; i < len; i++) {
+            Branch branch = branches.get(i);
+            if (squirrel.position.y > branch.position.y) {
+                if (squirrel.bounds.overlaps(branch.bounds)) {
+                    squirrel.hitBranch();
+                    break;
+                }
+            }
+        }
+    }
+    private void checkBeehiveCollisions()
+    {
+        if (squirrel.speed.y > 0) return;
+        if (squirrel.position.y > beehive.position.y) {
+            if (squirrel.bounds.overlaps(beehive.bounds)) {
+                squirrel.hitBeehive();
+            }
         }
     }
 

@@ -19,18 +19,18 @@ public class Bat extends DynamicGameObject {
         speed.set(BAT_SPEED, 0);
     }
 
-    public void update (float deltaTime) {
+    public void update (float deltaTime, float rangeSpeed) {
         position.add(speed.x * deltaTime, speed.y * deltaTime);
         bounds.x = position.x - BAT_WIDTH / 2;
         bounds.y = position.y - BAT_HEIGHT / 2;
 
         if (position.x < BAT_WIDTH / 2) {
             position.x = BAT_WIDTH / 2;
-            speed.x = BAT_SPEED;
+            speed.x = BAT_SPEED+rangeSpeed;
         }
         if (position.x > AreaController.AREA_WIDTH - BAT_WIDTH / 2) {
             position.x = AreaController.AREA_WIDTH - BAT_WIDTH / 2;
-            speed.x = -BAT_SPEED;
+            speed.x = -(BAT_SPEED+rangeSpeed);
         }
         stateTime += deltaTime;
     }

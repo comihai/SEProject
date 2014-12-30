@@ -48,6 +48,18 @@ public class Squirrel extends DynamicGameObject {
 
         stateTime += deltaTime;
     }
+    public void hitBranch()
+    {
+        speed.y = JUMP_VELOCITY;
+        state = STATE_JUMP;
+        stateTime = 0;
+    }
+    public void hitBeehive()
+    {
+        speed.y = JUMP_VELOCITY * 1.5f;
+        state = STATE_JUMP;
+        stateTime = 0;
+    }
 
     public int getState() {
         return state;

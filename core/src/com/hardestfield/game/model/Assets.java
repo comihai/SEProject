@@ -48,6 +48,8 @@ public class Assets {
     public static Animation batFly;
     public static Texture treeBranch;
     public static TextureRegion treeBranchRegion;
+    public static Texture beehave;
+    public static TextureRegion beehaveRegion;
 
 
     public static Texture loadTexture(String file) {
@@ -94,5 +96,9 @@ public class Assets {
         batFly = new Animation(0.2f, new TextureRegion(statesBat, 0, 0, 110, 100), new TextureRegion(statesBat, 110, 0, 110, 100));
         treeBranch = loadTexture("images/tree.png");
         treeBranchRegion = new TextureRegion(treeBranch, 0, 0, 1280, 444);
+        beehave = loadTexture("images/beehive.png");
+        beehaveRegion = new TextureRegion(beehave, 0, 0, 512, 512);
+
+
     }
 }
