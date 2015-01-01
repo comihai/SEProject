@@ -27,6 +27,7 @@ public class AreaController {
     public final List<Branch> branches;
     public final List<Beehive> beehives;
     public final List<Acorn> acorns;
+    public final List<AcornLeaf> acornLeafs;
     public final Random rand;
     int state = STATE_RUNNING;
     int score = 0;
@@ -38,6 +39,7 @@ public class AreaController {
         this.branches = new ArrayList<Branch>();
         this.beehives = new ArrayList<Beehive>();
         this.acorns = new ArrayList<Acorn>();
+        this.acornLeafs = new ArrayList<AcornLeaf>();
         this.heightSoFar = 0;
         this.state = STATE_RUNNING;
         rand = new Random();
@@ -59,6 +61,11 @@ public class AreaController {
         Acorn acorn = new Acorn(x + rand.nextFloat(), y+Acorn.ACORN_HEIGHT + rand.nextFloat() * 3);
         acorns.add(acorn);
     }
+    private void generateAcornLeaf(float x, float y)
+    {
+        AcornLeaf acornLeaf = new AcornLeaf(x + rand.nextFloat(), y+Acorn.ACORN_HEIGHT + rand.nextFloat() * 3);
+        acornLeafs.add(acornLeaf);
+    }
 
     private void generateBranches() {
         float y = 5;
@@ -75,8 +82,15 @@ public class AreaController {
             if (rand.nextFloat() > 0.9f && type != Branch.BRANCH_TYPE_MOVING) {
                 generateBeehive(x,y);
             }
-            if (rand.nextFloat() > 0.6f) {
-                generateAcorn(x,y);
+            float acornType = rand.nextFloat();
+            if (acornType > 0.5f) {
+                if(acornType <= 0.8f) {
+                    generateAcorn(x, y);
+                }
+                else
+                {
+                    generateAcornLeaf(x,y);
+                }
             }
 
             y += (maxJumpHeight - rand.nextFloat() * (maxJumpHeight / 3));
@@ -89,8 +103,8 @@ public class AreaController {
         updateBats(deltaTime);
         updateBranches(deltaTime);
         updateAcorns(deltaTime);
+        updateAcornLeafs(deltaTime);
         if (squirrel.getState() != Squirrel.STATE_HIT) {
-            score++;
             checkCollisions();
         }
     }
@@ -130,10 +144,20 @@ public class AreaController {
             acorn.update(deltaTime);
         }
     }
+    private void updateAcornLeafs(float deltaTime)
+    {
+        int len = acornLeafs.size();
+        for (int i = 0; i < len; i++) {
+            AcornLeaf acornLeaf = acornLeafs.get(i);
+            acornLeaf.update(deltaTime);
+        }
+    }
 
     private void checkCollisions() {
         checkBranchesCollisions();
         checkBeehivesCollisions();
+        checkAcornCollisions();
+        checkAcornLeafCollisions();
     }
 
     private void checkBranchesCollisions() {
@@ -159,6 +183,32 @@ public class AreaController {
                 if (squirrel.bounds.overlaps(beehive.bounds)) {
                     squirrel.hitBeehive();
                 }
+            }
+        }
+    }
+    private void checkAcornCollisions()
+    {
+        int len = acorns.size();
+        for (int i = 0; i < len; i++) {
+            Acorn acorn = acorns.get(i);
+            if(squirrel.bounds.overlaps(acorn.bounds))
+            {
+                acorns.remove(acorn);
+                len = acorns.size();
+                score += Acorn.ACORN_SCORE;
+            }
+        }
+    }
+    private void checkAcornLeafCollisions()
+    {
+        int len = acornLeafs.size();
+        for (int i = 0; i < len; i++) {
+            AcornLeaf acornLeaf = acornLeafs.get(i);
+            if(squirrel.bounds.overlaps(acornLeaf.bounds))
+            {
+                acornLeafs.remove(acornLeaf);
+                len = acornLeafs.size();
+                score += AcornLeaf.ACORNLEAF_SCORE;
             }
         }
     }

@@ -53,6 +53,7 @@ public class Area {
         renderBranch();
         renderBeehive();
         renderAcorn();
+        renderAcornLeaf();
         batch.end();
     }
 
@@ -76,8 +77,8 @@ public class Area {
         else
             batch.draw(keyFrame, area.squirrel.position.x - 0.5f, area.squirrel.position.y - 0.5f, side * 1, 1);
     }
-    private void renderBat()
-    {
+
+    private void renderBat() {
         int len = area.bats.size();
         for (int i = 0; i < len; i++) {
             Bat bat = area.bats.get(i);
@@ -89,8 +90,8 @@ public class Area {
                 batch.draw(keyFrame, bat.position.x - 0.5f, bat.position.y - 0.5f, side * 1, 1);
         }
     }
-    private void renderBranch()
-    {
+
+    private void renderBranch() {
         int len = area.branches.size();
         for (int i = 0; i < len; i++) {
             Branch branch = area.branches.get(i);
@@ -98,8 +99,8 @@ public class Area {
             batch.draw(keyFrame, branch.position.x - 1, branch.position.y - 0.25f, 2, 0.5f);
         }
     }
-    private void renderBeehive()
-    {
+
+    private void renderBeehive() {
         int len = area.beehives.size();
         for (int i = 0; i < len; i++) {
             Beehive beehive = area.beehives.get(i);
@@ -107,12 +108,20 @@ public class Area {
         }
 
     }
-    private void renderAcorn()
-    {
+
+    private void renderAcorn() {
         int len = area.acorns.size();
         for (int i = 0; i < len; i++) {
             Acorn acorn = area.acorns.get(i);
             batch.draw(Assets.acornRegion, acorn.position.x - 0.5f, acorn.position.y - 0.5f, 0.5f, 0.8f);
+        }
+    }
+
+    private void renderAcornLeaf() {
+        int len = area.acornLeafs.size();
+        for (int i = 0; i < len; i++) {
+            AcornLeaf acornLeaf = area.acornLeafs.get(i);
+            batch.draw(Assets.acornLeafRegion, acornLeaf.position.x - 0.5f, acornLeaf.position.y - 0.5f, 0.8f, 0.8f);
         }
     }
 
