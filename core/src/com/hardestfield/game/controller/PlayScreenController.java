@@ -43,6 +43,12 @@ public class PlayScreenController extends ScreenAdapter {
             case PAUSED:
                 updatePaused();
                 break;
+            case GAME_OVER:
+                updateGameOver();
+                break;
+            case LEVEL_END:
+                updateLevelEnd();
+                break;
         }
 
     }
@@ -65,7 +71,7 @@ public class PlayScreenController extends ScreenAdapter {
         Application.ApplicationType appType = Gdx.app.getType();
 
 
-        if (appType == Application.ApplicationType.Android) {
+        if (appType == Application.ApplicationType.Android || appType == Application.ApplicationType.iOS) {
             playScreen.getControl().update(deltaTime, Gdx.input.getAccelerometerX());
         } else {
             float accel = 0;
@@ -77,6 +83,10 @@ public class PlayScreenController extends ScreenAdapter {
         {
             lastScore = playScreen.getControl().getScore();
             playScreen.setScoreString("SCORE : " + lastScore);
+        }
+        if(playScreen.getControl().getState() == AreaController.STATE_NEXT_LEVEL)
+        {
+            playScreen.getGame().setScreen(new MainMenuScreenController(playScreen.getGame()));
         }
         if(playScreen.getControl().getState() == AreaController.STATE_GAME_OVER)
         {
@@ -105,10 +115,31 @@ public class PlayScreenController extends ScreenAdapter {
             }
         }
     }
+    private void updateGameOver()
+    {
+        if(Gdx.input.justTouched())
+        {
+            playScreen.getGame().setScreen(new MainMenuScreenController(playScreen.getGame()));
+        }
+    }
+    private void updateLevelEnd()
+    {
+        if(Gdx.input.justTouched())
+        {
+            playScreen.getControl().setScore(lastScore);
+            playScreen.setState(READY);
+        }
+    }
 
     @Override
     public void render(float delta) {
         update(delta);
         playScreen.draw();
+    }
+
+    @Override
+    public void pause() {
+        if(playScreen.getState() == RUNNING)
+            playScreen.setState(PAUSED);
     }
 }

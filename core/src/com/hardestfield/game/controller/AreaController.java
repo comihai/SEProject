@@ -159,7 +159,7 @@ public class AreaController {
         checkBeehivesCollisions();
         checkAcornCollisions();
         checkAcornLeafCollisions();
-        checkBatsCollisions();
+        //checkBatsCollisions();
         checkHollowCollisions();
     }
 

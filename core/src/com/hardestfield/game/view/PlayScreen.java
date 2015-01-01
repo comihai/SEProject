@@ -30,7 +30,7 @@ public class PlayScreen {
     public static final int RUNNING = 1;
     public static final int PAUSED = 2;
     public static final int LEVEL_END = 3;
-    public static final int OVER = 4;
+    public static final int GAME_OVER = 4;
 
     public PlayScreen(HardestField game) {
         this.game = game;
@@ -68,6 +68,13 @@ public class PlayScreen {
             case PAUSED:
                 paused();
                 break;
+            case GAME_OVER:
+                gameOver();
+                break;
+            case LEVEL_END:
+                levelEnd();
+                break;
+
         }
         game.batch.end();
     }
@@ -83,8 +90,20 @@ public class PlayScreen {
     }
 
     private void paused() {
+        Assets.font.draw(game.batch, scoreString, 10, 465);
         game.batch.draw(Assets.quitGameRegion, 340 - 64, 500 - 64, 40, 40);
         game.batch.draw(Assets.playRegion, 340 - 104, 500 - 64, 40, 40);
+    }
+    private void gameOver()
+    {
+        Assets.font.draw(game.batch, scoreString, 10, 465);
+        game.batch.draw(Assets.gameOver, 60, 240 - 96 / 2, 200, 180);
+    }
+    private void levelEnd()
+    {
+        String Text = "The level has finished!";
+        float width = Assets.font.getBounds(Text).width;
+        Assets.font.draw(game.batch, Text, 160 - width/2, 440);
     }
 
     public HardestField getGame() {

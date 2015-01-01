@@ -56,6 +56,8 @@ public class Assets {
     public static TextureRegion acornLeafRegion;
     public static Texture hollow;
     public static TextureRegion hollowRegion;
+    public static Texture gameOver;
+    public static TextureRegion gameOverRegion;
 
 
     public static Texture loadTexture(String file) {
@@ -110,6 +112,8 @@ public class Assets {
         acornLeafRegion = new TextureRegion(acornLeaf, 0, 0, 700, 700);
         hollow = loadTexture("images/hollow.png");
         hollowRegion = new TextureRegion(hollow, 0, 0, 300, 256);
+        gameOver = loadTexture("images/gameOver.png");
+        gameOverRegion = new TextureRegion(gameOver, 0, 0, 512, 512);
 
     }
 }
