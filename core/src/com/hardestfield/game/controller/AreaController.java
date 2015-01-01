@@ -28,6 +28,7 @@ public class AreaController {
     public final List<Beehive> beehives;
     public final List<Acorn> acorns;
     public final List<AcornLeaf> acornLeafs;
+    public Hollow hollow;
     public final Random rand;
     int state = STATE_RUNNING;
     int score = 0;
@@ -51,19 +52,19 @@ public class AreaController {
         Bat bat = new Bat(x + rand.nextFloat(), y + Bat.BAT_HEIGHT + rand.nextFloat() * 2);
         bats.add(bat);
     }
-    private void generateBeehive(float x, float y)
-    {
-        Beehive beehive = new Beehive(x,y+Branch.BRANCH_HEIGHT/2+Beehive.BEEHIVE_HEIGHT/2);
+
+    private void generateBeehive(float x, float y) {
+        Beehive beehive = new Beehive(x, y + Branch.BRANCH_HEIGHT / 2 + Beehive.BEEHIVE_HEIGHT / 2);
         beehives.add(beehive);
     }
-    private void generateAcorn(float x, float y)
-    {
-        Acorn acorn = new Acorn(x + rand.nextFloat(), y+Acorn.ACORN_HEIGHT + rand.nextFloat() * 3);
+
+    private void generateAcorn(float x, float y) {
+        Acorn acorn = new Acorn(x + rand.nextFloat(), y + Acorn.ACORN_HEIGHT + rand.nextFloat() * 3);
         acorns.add(acorn);
     }
-    private void generateAcornLeaf(float x, float y)
-    {
-        AcornLeaf acornLeaf = new AcornLeaf(x + rand.nextFloat(), y+Acorn.ACORN_HEIGHT + rand.nextFloat() * 3);
+
+    private void generateAcornLeaf(float x, float y) {
+        AcornLeaf acornLeaf = new AcornLeaf(x + rand.nextFloat(), y + Acorn.ACORN_HEIGHT + rand.nextFloat() * 3);
         acornLeafs.add(acornLeaf);
     }
 
@@ -80,21 +81,20 @@ public class AreaController {
                 generateBat(x, y);
             }
             if (rand.nextFloat() > 0.9f && type != Branch.BRANCH_TYPE_MOVING) {
-                generateBeehive(x,y);
+                generateBeehive(x, y);
             }
             float acornType = rand.nextFloat();
             if (acornType > 0.5f) {
-                if(acornType <= 0.8f) {
+                if (acornType <= 0.8f) {
                     generateAcorn(x, y);
-                }
-                else
-                {
-                    generateAcornLeaf(x,y);
+                } else {
+                    generateAcornLeaf(x, y);
                 }
             }
 
             y += (maxJumpHeight - rand.nextFloat() * (maxJumpHeight / 3));
         }
+        hollow = new Hollow(AREA_WIDTH / 3, y);
     }
 
     public void update(float deltaTime, float accelX) {
@@ -107,6 +107,7 @@ public class AreaController {
         if (squirrel.getState() != Squirrel.STATE_HIT) {
             checkCollisions();
         }
+        checkGameOver();
     }
 
     private void updateSquirrel(float deltaTime, float accelX) {
@@ -118,7 +119,7 @@ public class AreaController {
         if (squirrel.getState() != Squirrel.STATE_HIT)
             squirrel.speed.x = -accelX / 10 * Squirrel.MOVE_VELOCITY;
         squirrel.update(deltaTime);
-
+        heightSoFar = Math.max(squirrel.position.y, heightSoFar);
     }
 
     private void updateBats(float deltaTime) {
@@ -136,16 +137,16 @@ public class AreaController {
             branch.update(deltaTime);
         }
     }
-    private void updateAcorns(float deltaTime)
-    {
+
+    private void updateAcorns(float deltaTime) {
         int len = acorns.size();
         for (int i = 0; i < len; i++) {
             Acorn acorn = acorns.get(i);
             acorn.update(deltaTime);
         }
     }
-    private void updateAcornLeafs(float deltaTime)
-    {
+
+    private void updateAcornLeafs(float deltaTime) {
         int len = acornLeafs.size();
         for (int i = 0; i < len; i++) {
             AcornLeaf acornLeaf = acornLeafs.get(i);
@@ -158,6 +159,8 @@ public class AreaController {
         checkBeehivesCollisions();
         checkAcornCollisions();
         checkAcornLeafCollisions();
+        checkBatsCollisions();
+        checkHollowCollisions();
     }
 
     private void checkBranchesCollisions() {
@@ -173,8 +176,8 @@ public class AreaController {
             }
         }
     }
-    private void checkBeehivesCollisions()
-    {
+
+    private void checkBeehivesCollisions() {
         if (squirrel.speed.y > 0) return;
         int len = beehives.size();
         for (int i = 0; i < len; i++) {
@@ -186,26 +189,24 @@ public class AreaController {
             }
         }
     }
-    private void checkAcornCollisions()
-    {
+
+    private void checkAcornCollisions() {
         int len = acorns.size();
         for (int i = 0; i < len; i++) {
             Acorn acorn = acorns.get(i);
-            if(squirrel.bounds.overlaps(acorn.bounds))
-            {
+            if (squirrel.bounds.overlaps(acorn.bounds)) {
                 acorns.remove(acorn);
                 len = acorns.size();
                 score += Acorn.ACORN_SCORE;
             }
         }
     }
-    private void checkAcornLeafCollisions()
-    {
+
+    private void checkAcornLeafCollisions() {
         int len = acornLeafs.size();
         for (int i = 0; i < len; i++) {
             AcornLeaf acornLeaf = acornLeafs.get(i);
-            if(squirrel.bounds.overlaps(acornLeaf.bounds))
-            {
+            if (squirrel.bounds.overlaps(acornLeaf.bounds)) {
                 acornLeafs.remove(acornLeaf);
                 len = acornLeafs.size();
                 score += AcornLeaf.ACORNLEAF_SCORE;
@@ -213,11 +214,42 @@ public class AreaController {
         }
     }
 
+    private void checkBatsCollisions() {
+        int len = bats.size();
+        for (int i = 0; i < len; i++) {
+            Bat bat = bats.get(i);
+            if (bat.bounds.overlaps(squirrel.bounds)) {
+                squirrel.hitBat();
+            }
+        }
+    }
+
+    private void checkHollowCollisions() {
+        if (hollow.bounds.overlaps(squirrel.bounds)) {
+            state = STATE_NEXT_LEVEL;
+        }
+    }
+
+    private void checkGameOver() {
+        if (heightSoFar - 7.5f > squirrel.position.y) {
+            state = STATE_GAME_OVER;
+        }
+    }
+
+
     public int getScore() {
         return score;
     }
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }

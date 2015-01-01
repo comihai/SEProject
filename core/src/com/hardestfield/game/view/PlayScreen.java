@@ -26,11 +26,11 @@ public class PlayScreen {
     int state;
     String scoreString;
 
-    static final int READY = 0;
-    static final int RUNNING = 1;
-    static final int PAUSED = 2;
-    static final int LEVEL_END = 3;
-    static final int OVER = 4;
+    public static final int READY = 0;
+    public static final int RUNNING = 1;
+    public static final int PAUSED = 2;
+    public static final int LEVEL_END = 3;
+    public static final int OVER = 4;
 
     public PlayScreen(HardestField game) {
         this.game = game;

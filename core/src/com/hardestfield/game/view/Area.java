@@ -54,6 +54,7 @@ public class Area {
         renderBeehive();
         renderAcorn();
         renderAcornLeaf();
+        renderHollow();
         batch.end();
     }
 
@@ -67,8 +68,10 @@ public class Area {
                 keyFrame = Assets.actorStatesJump.getKeyFrame(area.squirrel.getStateTime(), Animation.ANIMATION_LOOPING);
                 break;
             case Squirrel.STATE_HIT:
+                keyFrame = Assets.actorHit;
+                break;
             default:
-                keyFrame = Assets.actorFall;
+                keyFrame = Assets.actorHit;
         }
 
         float side = area.squirrel.speed.x < 0 ? 1 : -1;
@@ -123,6 +126,11 @@ public class Area {
             AcornLeaf acornLeaf = area.acornLeafs.get(i);
             batch.draw(Assets.acornLeafRegion, acornLeaf.position.x - 0.5f, acornLeaf.position.y - 0.5f, 0.8f, 0.8f);
         }
+    }
+
+    private void renderHollow() {
+        Hollow hollow = area.hollow;
+        batch.draw(Assets.hollowRegion, hollow.position.x - 1, hollow.position.y - 1, 5, 5);
     }
 
 }

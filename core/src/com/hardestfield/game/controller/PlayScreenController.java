@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.hardestfield.game.HardestField;
+import com.hardestfield.game.utils.Settings;
 import com.hardestfield.game.view.PlayScreen;
 
 /**
@@ -15,11 +16,11 @@ public class PlayScreenController extends ScreenAdapter {
 
     PlayScreen playScreen;
 
-    static final int READY = 0;
-    static final int RUNNING = 1;
-    static final int PAUSED = 2;
-    static final int LEVEL_END = 3;
-    static final int OVER = 4;
+    final int READY = 0;
+    final int RUNNING = 1;
+    final int PAUSED = 2;
+    final int LEVEL_END = 3;
+    final int GAME_OVER = 4;
     int lastScore;
 
 
@@ -76,6 +77,16 @@ public class PlayScreenController extends ScreenAdapter {
         {
             lastScore = playScreen.getControl().getScore();
             playScreen.setScoreString("SCORE : " + lastScore);
+        }
+        if(playScreen.getControl().getState() == AreaController.STATE_GAME_OVER)
+        {
+            playScreen.setState(GAME_OVER);
+            if(lastScore >= Settings.highScores[6])
+                playScreen.setScoreString("NEW HIGHSCORE : "+lastScore);
+            else
+                playScreen.setScoreString("SCORE : "+ lastScore);
+            Settings.addScore(lastScore);
+            Settings.save();
         }
     }
 
