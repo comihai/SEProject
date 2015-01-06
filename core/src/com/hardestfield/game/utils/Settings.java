@@ -14,6 +14,9 @@ public class Settings {
     public static int[] highScores = new int[] {0,0,0,0,0,0,0};
     static String file = ".highScoresHardestField";
 
+    /**
+     * This function loads the highscores from a file and set the music on / off at startup
+     */
     public static void load()
     {
         try
@@ -31,6 +34,10 @@ public class Settings {
 
         }
     }
+
+    /**
+     * THis function saves the content of the highScores variabile into a file
+     */
     public static void save()
     {
         try {
@@ -45,6 +52,10 @@ public class Settings {
         }
     }
 
+    /**
+     * This function decides whether there is a higher score than those saved
+     * @param score The score that is compared and saved if higher
+     */
     public static void addScore (int score) {
         for (int i = 0; i < 7; i++) {
             if (highScores[i] < score) {

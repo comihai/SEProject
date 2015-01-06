@@ -10,7 +10,7 @@ import com.hardestfield.game.view.PlayScreen;
 
 /**
  * Created by mihai on 12/13/2014.
- * This class controls all the action performed during play
+ * This class controls all the action performed during the game
  */
 public class PlayScreenController extends ScreenAdapter {
 
@@ -23,7 +23,10 @@ public class PlayScreenController extends ScreenAdapter {
     final int GAME_OVER = 4;
     int lastScore;
 
-
+    /**
+     * Generic Constructor
+     * @param game This variable creates and loads all the resources of the game
+     */
     public PlayScreenController(HardestField game) {
 
         playScreen = new PlayScreen(game);
@@ -31,6 +34,10 @@ public class PlayScreenController extends ScreenAdapter {
         playScreen.setScoreString("SCORE : 0");
     }
 
+    /**
+     * This function updates the state of the game at each input
+     * @param deltaTime The time interval for updating
+     */
     public void update(float deltaTime) {
         if (deltaTime > 0.1f) deltaTime = 0.1f;
         switch (playScreen.getState()) {
@@ -43,22 +50,31 @@ public class PlayScreenController extends ScreenAdapter {
             case PAUSED:
                 updatePaused();
                 break;
-            case GAME_OVER:
-                updateGameOver();
-                break;
             case LEVEL_END:
                 updateLevelEnd();
                 break;
+            case GAME_OVER:
+                updateGameOver();
+                break;
+
         }
 
     }
 
+    /**
+     * This function set the game in running state on the first click
+     */
     private void updateReady() {
         if (Gdx.input.justTouched()) {
             playScreen.setState(RUNNING);
         }
     }
 
+    /**
+     * This function update the screen and loads the options for resume or exit the game
+     *
+     * @param deltaTime The time interval for updating
+     */
     private void updateRunning(float deltaTime) {
         if (Gdx.input.justTouched()) {
             playScreen.getGuiCamera().unproject(playScreen.getTouchPoint().set(Gdx.input.getX(), Gdx.input.getY(), 0));
@@ -70,29 +86,47 @@ public class PlayScreenController extends ScreenAdapter {
         }
         Application.ApplicationType appType = Gdx.app.getType();
 
-
-        if (appType == Application.ApplicationType.Android || appType == Application.ApplicationType.iOS) {
+        /**
+         * Check the type of platform for getting commands for moving left or right
+         */
+        if (appType == Application.ApplicationType.Android) {
+            //for android
             playScreen.getControl().update(deltaTime, Gdx.input.getAccelerometerX());
         } else {
+            //for desktop and web
             float accel = 0;
             if (Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT)) accel = 5f;
             if (Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)) accel = -5f;
             playScreen.getControl().update(deltaTime, accel);
         }
+        /**
+         * Modify the score that is displayed if it is different from the last change
+         */
         if(playScreen.getControl().getScore() != lastScore)
         {
             lastScore = playScreen.getControl().getScore();
             playScreen.setScoreString("SCORE : " + lastScore);
         }
+
+        /**
+         * Check if the actor has finished the level
+         */
         if(playScreen.getControl().getState() == AreaController.STATE_NEXT_LEVEL)
         {
-            playScreen.getGame().setScreen(new MainMenuScreenController(playScreen.getGame()));
+            playScreen.setState(LEVEL_END);
+            Settings.addScore(lastScore);
+            Settings.save();
+
+
         }
+        /**
+         * Check if the game is over
+         */
         if(playScreen.getControl().getState() == AreaController.STATE_GAME_OVER)
         {
             playScreen.setState(GAME_OVER);
             if(lastScore >= Settings.highScores[6])
-                playScreen.setScoreString("NEW HIGHSCORE : "+lastScore);
+                playScreen.setScoreString("NEW HIGHSCORE:"+lastScore);
             else
                 playScreen.setScoreString("SCORE : "+ lastScore);
             Settings.addScore(lastScore);
@@ -100,21 +134,30 @@ public class PlayScreenController extends ScreenAdapter {
         }
     }
 
+    /**
+     * Update the state of the game depending on the option chosen
+     */
     private void updatePaused() {
         if (Gdx.input.justTouched()) {
             playScreen.getGuiCamera().unproject(playScreen.getTouchPoint().set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
+            //resume
             if (playScreen.getResumeBounds().contains(playScreen.getTouchPoint().x, playScreen.getTouchPoint().y)) {
                 playScreen.setState(RUNNING);
                 return;
             }
 
+            ///exit
             if (playScreen.getQuitBounds().contains(playScreen.getTouchPoint().x, playScreen.getTouchPoint().y)) {
                 playScreen.getGame().setScreen(new MainMenuScreenController(playScreen.getGame()));
                 return;
             }
         }
     }
+
+    /**
+     * If the game is over and one click is considered as input it will set the screen to mainscreen
+     */
     private void updateGameOver()
     {
         if(Gdx.input.justTouched())
@@ -122,12 +165,18 @@ public class PlayScreenController extends ScreenAdapter {
             playScreen.getGame().setScreen(new MainMenuScreenController(playScreen.getGame()));
         }
     }
+
+    /**
+     * iF the state of the game is LEVEL_END than at one click it will jump to next level
+     */
     private void updateLevelEnd()
     {
         if(Gdx.input.justTouched())
         {
             playScreen.getControl().setScore(lastScore);
-            playScreen.setState(READY);
+            //TODO
+            //change the arg of setScreen to next level
+            playScreen.getGame().setScreen(new MainMenuScreenController(playScreen.getGame()));
         }
     }
 

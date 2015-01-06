@@ -11,11 +11,20 @@ public class AcornLeaf extends GameObject {
 
     float stateTime;
 
+    /**
+     * Generic constructor
+     * @param x  position on the x axis
+     * @param y  position on the y axis
+     */
     public AcornLeaf(float x, float y) {
         super(x, y, ACORNLEAF_WIDTH, ACORNLEAF_HEIGHT);
         stateTime = 0;
     }
 
+    /**
+     * This function accumulates the time evolution of the game
+     * @param deltaTime The time interval for updating
+     */
     public void update(float deltaTime) {
         stateTime += deltaTime;
     }

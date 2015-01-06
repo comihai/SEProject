@@ -21,7 +21,11 @@ public class Area {
     OrthographicCamera cam;
     SpriteBatch batch;
 
-
+    /**
+     * Generic Constructor
+     * @param batch  Draws batched quads using indices
+     * @param area   Instance of class Area used for accessing objects that exist in the game area
+     */
     public Area(SpriteBatch batch, AreaController area) {
         this.area = area;
         this.cam = new OrthographicCamera(REND_WIDTH, REND_HEIGHT);
@@ -29,14 +33,22 @@ public class Area {
         this.batch = batch;
     }
 
+    /**
+     * This function sets the position of the camera and the projection matrix
+     */
     public void render() {
-        if (area.squirrel.position.y > cam.position.y) cam.position.y = area.squirrel.position.y;
+        if(area.squirrels.isEmpty())
+            return;
+        if (area.squirrels.get(0).position.y > cam.position.y) cam.position.y = area.squirrels.get(0).position.y;
         cam.update();
         batch.setProjectionMatrix(cam.combined);
         renderBackground();
         renderObjects();
     }
 
+    /**
+     * THis function draws a background with the bottom left corner at x,y and stretching the region to cover the given width and height.
+     */
     public void renderBackground() {
         batch.disableBlending();
         batch.begin();
@@ -45,6 +57,9 @@ public class Area {
         batch.end();
     }
 
+    /**
+     * THis function renders all the objects that exist in the game area
+     */
     public void renderObjects() {
         batch.enableBlending();
         batch.begin();
@@ -58,14 +73,19 @@ public class Area {
         batch.end();
     }
 
+    /**
+     * THis function draws the frames of the squirrel
+     */
     private void renderSquirrel() {
+        if(area.squirrels.isEmpty())
+            return;
         TextureRegion keyFrame;
-        switch (area.squirrel.getState()) {
+        switch (area.squirrels.get(0).getState()) {
             case Squirrel.STATE_FALL:
-                keyFrame = Assets.actorStatesFall.getKeyFrame(area.squirrel.getStateTime(), Animation.ANIMATION_LOOPING);
+                keyFrame = Assets.actorStatesFall.getKeyFrame(area.squirrels.get(0).getStateTime(), Animation.ANIMATION_LOOPING);
                 break;
             case Squirrel.STATE_JUMP:
-                keyFrame = Assets.actorStatesJump.getKeyFrame(area.squirrel.getStateTime(), Animation.ANIMATION_LOOPING);
+                keyFrame = Assets.actorStatesJump.getKeyFrame(area.squirrels.get(0).getStateTime(), Animation.ANIMATION_LOOPING);
                 break;
             case Squirrel.STATE_HIT:
                 keyFrame = Assets.actorHit;
@@ -74,13 +94,16 @@ public class Area {
                 keyFrame = Assets.actorHit;
         }
 
-        float side = area.squirrel.speed.x < 0 ? 1 : -1;
+        float side = area.squirrels.get(0).speed.x < 0 ? 1 : -1;
         if (side < 0)
-            batch.draw(keyFrame, area.squirrel.position.x + 0.5f, area.squirrel.position.y - 0.5f, side * 1, 1);
+            batch.draw(keyFrame, area.squirrels.get(0).position.x + 0.5f, area.squirrels.get(0).position.y - 0.5f, side * 1, 1);
         else
-            batch.draw(keyFrame, area.squirrel.position.x - 0.5f, area.squirrel.position.y - 0.5f, side * 1, 1);
+            batch.draw(keyFrame, area.squirrels.get(0).position.x - 0.5f, area.squirrels.get(0).position.y - 0.5f, side * 1, 1);
     }
 
+    /**
+     * This function draws the frames of the bats
+     */
     private void renderBat() {
         int len = area.bats.size();
         for (int i = 0; i < len; i++) {
@@ -94,6 +117,9 @@ public class Area {
         }
     }
 
+    /**
+     * This function draws the frames of the branches
+     */
     private void renderBranch() {
         int len = area.branches.size();
         for (int i = 0; i < len; i++) {
@@ -103,6 +129,9 @@ public class Area {
         }
     }
 
+    /**
+     * THis function draws the beehives
+     */
     private void renderBeehive() {
         int len = area.beehives.size();
         for (int i = 0; i < len; i++) {
@@ -112,6 +141,9 @@ public class Area {
 
     }
 
+    /**
+     * THis function draws the acorns
+     */
     private void renderAcorn() {
         int len = area.acorns.size();
         for (int i = 0; i < len; i++) {
@@ -120,6 +152,9 @@ public class Area {
         }
     }
 
+    /**
+     * This function draws the acorns with leaf
+     */
     private void renderAcornLeaf() {
         int len = area.acornLeafs.size();
         for (int i = 0; i < len; i++) {
@@ -128,9 +163,12 @@ public class Area {
         }
     }
 
+    /**
+     * This function draws the hollow at the finished of the game
+     */
     private void renderHollow() {
         Hollow hollow = area.hollow;
-        batch.draw(Assets.hollowRegion, hollow.position.x - 1, hollow.position.y - 1, 5, 5);
+        batch.draw(Assets.hollowRegion, hollow.position.x-2, hollow.position.y-2, 5, 5);
     }
 
 }

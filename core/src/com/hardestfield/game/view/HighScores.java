@@ -21,18 +21,28 @@ public class HighScores {
     OrthographicCamera guiCam;
     HardestField game;
 
+    /**
+     * Generic constructor
+     * @param game This variable creates and loads all the resources of the game
+     */
     public HighScores(HardestField game) {
         this.game = game;
         backBounds = new Rectangle(0, 0, 40, 40);
         guiCam = new OrthographicCamera(320, 480);
         guiCam.position.set(160, 240, 0);
         scores = new String[7];
+        //TODO
+        //change the number with the name of the player
         for (int i = 0; i < 7; i++) {
             scores[i] = i + 1 + ") " + Settings.highScores[i];
             offset = Math.max(Assets.font.getBounds(scores[i]).width, offset);
         }
         offset = 160 - offset / 2 + Assets.font.getSpaceWidth() / 2;
     }
+
+    /**
+     * This function draws the high scores page
+     */
     public void draw()
     {
         GL20 gl = Gdx.gl;
@@ -55,12 +65,14 @@ public class HighScores {
             y += Assets.font.getLineHeight();
         }
 
-
-
         game.batch.draw(Assets.quitGameRegion, 0, 0, 40, 40);
         game.batch.end();
     }
 
+    /**
+     * Getters and Setters
+     * @return
+     */
     public String[] getScores() {
         return scores;
     }

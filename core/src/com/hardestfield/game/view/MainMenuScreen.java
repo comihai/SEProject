@@ -26,7 +26,10 @@ public class MainMenuScreen {
     private Rectangle playBounds;
     private Vector3 touchPoint;
 
-
+    /**
+     * Generic constructor
+     * @param game This variable creates and loads all the resources of the game
+     */
     public MainMenuScreen(HardestField game) {
         this.game = game;
         guiCam = new OrthographicCamera(320, 480);
@@ -40,6 +43,9 @@ public class MainMenuScreen {
         touchPoint = new Vector3();
     }
 
+    /**
+     * This function draws the rectangles in the screen
+     */
     public void draw() {
         GL20 gl = Gdx.gl;
         gl.glClearColor(1, 0, 0, 1);
@@ -62,7 +68,10 @@ public class MainMenuScreen {
 
     }
 
-
+    /**
+     * Getters and Setters
+     * @return
+     */
     public OrthographicCamera getGuiCam() {
         return guiCam;
     }

@@ -7,9 +7,14 @@ package com.hardestfield.game.model;
  */
 public class Hollow extends GameObject {
 
-    public static float HOLLOW_WIDTH = 1.7f;
-    public static float HOLLOW_HEIGHT = 1.7f;
+    public static float HOLLOW_WIDTH = 6f;
+    public static float HOLLOW_HEIGHT = 2f;
 
+    /**
+     * Generic constructor
+     * @param x  position on the x axis
+     * @param y  position on the y axis
+     */
     public Hollow (float x, float y) {
         super(x, y, HOLLOW_WIDTH, HOLLOW_HEIGHT);
     }

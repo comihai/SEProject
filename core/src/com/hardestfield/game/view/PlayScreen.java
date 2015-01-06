@@ -32,12 +32,18 @@ public class PlayScreen {
     public static final int LEVEL_END = 3;
     public static final int GAME_OVER = 4;
 
+    /**
+     * Generic Constructor
+     * @param game This variable creates and loads all the resources of the game
+     */
     public PlayScreen(HardestField game) {
         this.game = game;
         state = READY;
         guiCamera = new OrthographicCamera(320, 480);
-        guiCamera.position.set(320 / 2, 480 / 2, 0);
+        guiCamera.position.set(160, 240, 0);
         touchPoint = new Vector3();
+        //TODO
+        //Increse the bounds of the pause, resume and quit bottons because on android are too small
         quitBounds = new Rectangle(290, 450, 12, 12);
         pauseBounds = new Rectangle(290, 450, 11, 11);
         resumeBounds = new Rectangle(250, 450, 12, 12);
@@ -45,18 +51,18 @@ public class PlayScreen {
         areaRenderer = new Area(game.batch, control);
     }
 
+    /**
+     * This function draws batched quads using indices
+     */
     public void draw() {
-
         GL20 gl = Gdx.gl;
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         areaRenderer.render();
-
         guiCamera.update();
         game.batch.setProjectionMatrix(guiCamera.combined);
         game.batch.enableBlending();
         game.batch.begin();
-
 
         switch (state) {
             case READY:
@@ -79,33 +85,53 @@ public class PlayScreen {
         game.batch.end();
     }
 
+    /**
+     * This function draws a texture region for ready state of the game
+     */
     private void ready() {
         game.batch.draw(Assets.clickForStartRegion, 10, 50, 300, 30);
     }
 
+    /**
+     * This function draws a texture region for runnnig state of the game and prints the score
+     */
     private void running() {
 
         game.batch.draw(Assets.pauseRegion, 340 - 64, 500 - 64, 40, 40);
         Assets.font.draw(game.batch, scoreString, 10, 465);
     }
 
+    /**
+     * This function draws two textures for paused state of the game and prints the score
+     */
     private void paused() {
         Assets.font.draw(game.batch, scoreString, 10, 465);
         game.batch.draw(Assets.quitGameRegion, 340 - 64, 500 - 64, 40, 40);
         game.batch.draw(Assets.playRegion, 340 - 104, 500 - 64, 40, 40);
     }
+
+    /**
+     * This function draws a texture region for gameOver state of the game and prints the score / new highscore
+     */
     private void gameOver()
     {
-        Assets.font.draw(game.batch, scoreString, 10, 465);
+        Assets.font.draw(game.batch, scoreString, 5, 465);
         game.batch.draw(Assets.gameOver, 60, 240 - 96 / 2, 200, 180);
     }
+
+    /**
+     * This function draws a texture region for gameOver state of the game and prints the score / new highscore
+     */
     private void levelEnd()
     {
-        String Text = "The level has finished!";
-        float width = Assets.font.getBounds(Text).width;
-        Assets.font.draw(game.batch, Text, 160 - width/2, 440);
+        String Text = "LEVEL FINISHED!";
+        Assets.font.draw(game.batch, Text, 30, 440);
     }
 
+    /**
+     * Getters and Setters
+     * @return
+     */
     public HardestField getGame() {
         return game;
     }

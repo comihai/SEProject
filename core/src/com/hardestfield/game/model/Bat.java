@@ -14,27 +14,43 @@ public class Bat extends DynamicGameObject {
 
     float stateTime = 0;
 
+    /**
+     * Generic constructor
+     *
+     * @param x position on the x axis
+     * @param y position on the y axis
+     */
     public Bat(float x, float y) {
         super(x, y, BAT_WIDTH, BAT_HEIGHT);
         speed.set(BAT_SPEED, 0);
     }
 
-    public void update (float deltaTime, float rangeSpeed) {
+    /**
+     * This class updates the position and the speed of the bats
+     *
+     * @param deltaTime  The time interval for updating
+     * @param rangeSpeed An additional speed
+     */
+    public void update(float deltaTime, float rangeSpeed) {
         position.add(speed.x * deltaTime, speed.y * deltaTime);
         bounds.x = position.x - BAT_WIDTH / 2;
         bounds.y = position.y - BAT_HEIGHT / 2;
 
         if (position.x < BAT_WIDTH / 2) {
             position.x = BAT_WIDTH / 2;
-            speed.x = BAT_SPEED+rangeSpeed;
+            speed.x = BAT_SPEED + rangeSpeed;
         }
         if (position.x > AreaController.AREA_WIDTH - BAT_WIDTH / 2) {
             position.x = AreaController.AREA_WIDTH - BAT_WIDTH / 2;
-            speed.x = -(BAT_SPEED+rangeSpeed);
+            speed.x = -(BAT_SPEED + rangeSpeed);
         }
         stateTime += deltaTime;
     }
 
+    /**
+     * Getters and Setters
+     * @return
+     */
     public float getStateTime() {
         return stateTime;
     }

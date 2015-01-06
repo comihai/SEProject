@@ -4,7 +4,7 @@ import com.hardestfield.game.controller.AreaController;
 
 /**
  * Created by mihai on 12/29/2014.
- * This class represents the branches where squirrel jumps
+ * This class represents the branches that squirrel jumps
  */
 public class Branch extends DynamicGameObject{
 
@@ -12,23 +12,30 @@ public class Branch extends DynamicGameObject{
     public static final float BRANCH_HEIGHT = 0.5f;
     public static final int BRANCH_TYPE_STATIC = 0;
     public static final int BRANCH_TYPE_MOVING = 1;
-    public static final int BRANCH_STATE_NORMAL = 0;
     public static final float BRANCH_VELOCITY = 2;
 
     int type;
-    int state;
     float stateTime;
 
+    /**
+     * Generic constructor
+     * @param type  type of the branch - static / moving
+     * @param x     position on the x axis
+     * @param y     position on the y axis
+     */
     public Branch (int type, float x, float y) {
         super(x, y, BRANCH_WIDTH, BRANCH_HEIGHT);
         this.type = type;
-        this.state = BRANCH_STATE_NORMAL;
         this.stateTime = 0;
         if (type == BRANCH_TYPE_MOVING) {
             speed.x = BRANCH_VELOCITY;
         }
     }
 
+    /**
+     * This function updates the position of the branch
+     * @param deltaTime  The time interval for updating
+     */
     public void update (float deltaTime) {
         if (type == BRANCH_TYPE_MOVING) {
             position.add(speed.x * deltaTime, 0);
@@ -46,29 +53,5 @@ public class Branch extends DynamicGameObject{
         }
 
         stateTime += deltaTime;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    public float getStateTime() {
-        return stateTime;
-    }
-
-    public void setStateTime(float stateTime) {
-        this.stateTime = stateTime;
     }
 }

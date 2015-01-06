@@ -20,14 +20,27 @@ public class MainMenuScreenController extends ScreenAdapter {
     private int volume = 100;
     private int temp = 1;
 
+    /**
+     * Generic constructor
+     *
+     * @param game This variable creates and loads all the resources of the game
+     */
     public MainMenuScreenController(HardestField game) {
         mms = new MainMenuScreen(game);
     }
 
+    /**
+     * THis function updates the screen depending on user input
+     */
     public void update() {
         if (Gdx.input.justTouched()) {
             mms.getGuiCam().unproject(mms.getTouchPoint().set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
+            //TODO
+            //redraw the menu for multiplayer option
+            //write code for help option
+
+            //controls the volume of the music
             if (mms.getSoundBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y)) {
                 if (temp == 1) {
                     volume -= 20;
@@ -47,6 +60,7 @@ public class MainMenuScreenController extends ScreenAdapter {
                 }
                 return;
             }
+            //controls the music on / off
             if (mms.getMusicBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y)) {
                 Settings.musicEnabled = !Settings.musicEnabled;
                 if (Settings.musicEnabled)
@@ -55,13 +69,15 @@ public class MainMenuScreenController extends ScreenAdapter {
                     Assets.backgroundMusic.pause();
                 return;
             }
+            //check if is clicked the play option
             if (mms.getPlayBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y)) {
                 mms.getGame().setScreen(new PlayScreenController(mms.getGame()));
             }
-            if(mms.getHighScoresBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y))
-            {
+            //check if is clicked the highscores option
+            if (mms.getHighScoresBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y)) {
                 mms.getGame().setScreen(new HighScoresController(mms.getGame()));
             }
+            //check if is clicked the help option
             if (mms.getExitBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y)) {
                 Gdx.app.exit();
                 return;
