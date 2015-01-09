@@ -34,8 +34,8 @@ public class MainMenuScreen {
         this.game = game;
         guiCam = new OrthographicCamera(320, 480);
         guiCam.position.set(320 / 2, 480 / 2, 0);
-        soundBounds = new Rectangle(10, 10, 20, 20);
-        musicBounds = new Rectangle(290, 10, 20, 20);
+        soundBounds = new Rectangle(5, 5, 30, 30);
+        musicBounds = new Rectangle(285, 5, 30, 30);
         exitBounds = new Rectangle(128, 165, 55, 18);
         helpBounds = new Rectangle(128, 192, 59, 16);
         highScoresBounds = new Rectangle(96, 211, 129, 15);

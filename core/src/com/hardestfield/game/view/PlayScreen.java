@@ -25,6 +25,7 @@ public class PlayScreen {
     Rectangle resumeBounds;
     int state;
     String scoreString;
+    String pause;
 
     public static final int READY = 0;
     public static final int RUNNING = 1;
@@ -34,6 +35,7 @@ public class PlayScreen {
 
     /**
      * Generic Constructor
+     *
      * @param game This variable creates and loads all the resources of the game
      */
     public PlayScreen(HardestField game) {
@@ -42,13 +44,12 @@ public class PlayScreen {
         guiCamera = new OrthographicCamera(320, 480);
         guiCamera.position.set(160, 240, 0);
         touchPoint = new Vector3();
-        //TODO
-        //Increse the bounds of the pause, resume and quit bottons because on android are too small
-        quitBounds = new Rectangle(290, 450, 12, 12);
-        pauseBounds = new Rectangle(290, 450, 11, 11);
-        resumeBounds = new Rectangle(250, 450, 12, 12);
+        quitBounds = new Rectangle(278, 439, 34, 33);
+        pauseBounds = new Rectangle(281, 439, 30, 33);
+        resumeBounds = new Rectangle(240, 439, 34, 33);
         control = new AreaController();
         areaRenderer = new Area(game.batch, control);
+        pause = "PAUSE";
     }
 
     /**
@@ -106,6 +107,7 @@ public class PlayScreen {
      */
     private void paused() {
         Assets.font.draw(game.batch, scoreString, 10, 465);
+        Assets.font.draw(game.batch, pause, 115, 120);
         game.batch.draw(Assets.quitGameRegion, 340 - 64, 500 - 64, 40, 40);
         game.batch.draw(Assets.playRegion, 340 - 104, 500 - 64, 40, 40);
     }
@@ -113,8 +115,7 @@ public class PlayScreen {
     /**
      * This function draws a texture region for gameOver state of the game and prints the score / new highscore
      */
-    private void gameOver()
-    {
+    private void gameOver() {
         Assets.font.draw(game.batch, scoreString, 5, 465);
         game.batch.draw(Assets.gameOver, 60, 240 - 96 / 2, 200, 180);
     }
@@ -122,14 +123,14 @@ public class PlayScreen {
     /**
      * This function draws a texture region for gameOver state of the game and prints the score / new highscore
      */
-    private void levelEnd()
-    {
+    private void levelEnd() {
         String Text = "LEVEL FINISHED!";
         Assets.font.draw(game.batch, Text, 30, 440);
     }
 
     /**
      * Getters and Setters
+     *
      * @return
      */
     public HardestField getGame() {

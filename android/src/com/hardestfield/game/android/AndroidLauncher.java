@@ -11,11 +11,6 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-        /**
-         * conserve battery
-         */
-        config.useAccelerometer = false;
-        config.useCompass = false;
 		initialize(new HardestField(), config);
 	}
 }

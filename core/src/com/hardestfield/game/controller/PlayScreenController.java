@@ -25,6 +25,7 @@ public class PlayScreenController extends ScreenAdapter {
 
     /**
      * Generic Constructor
+     *
      * @param game This variable creates and loads all the resources of the game
      */
     public PlayScreenController(HardestField game) {
@@ -36,6 +37,7 @@ public class PlayScreenController extends ScreenAdapter {
 
     /**
      * This function updates the state of the game at each input
+     *
      * @param deltaTime The time interval for updating
      */
     public void update(float deltaTime) {
@@ -102,8 +104,7 @@ public class PlayScreenController extends ScreenAdapter {
         /**
          * Modify the score that is displayed if it is different from the last change
          */
-        if(playScreen.getControl().getScore() != lastScore)
-        {
+        if (playScreen.getControl().getScore() != lastScore) {
             lastScore = playScreen.getControl().getScore();
             playScreen.setScoreString("SCORE : " + lastScore);
         }
@@ -111,8 +112,7 @@ public class PlayScreenController extends ScreenAdapter {
         /**
          * Check if the actor has finished the level
          */
-        if(playScreen.getControl().getState() == AreaController.STATE_NEXT_LEVEL)
-        {
+        if (playScreen.getControl().getState() == AreaController.STATE_NEXT_LEVEL) {
             playScreen.setState(LEVEL_END);
             Settings.addScore(lastScore);
             Settings.save();
@@ -122,13 +122,12 @@ public class PlayScreenController extends ScreenAdapter {
         /**
          * Check if the game is over
          */
-        if(playScreen.getControl().getState() == AreaController.STATE_GAME_OVER)
-        {
+        if (playScreen.getControl().getState() == AreaController.STATE_GAME_OVER) {
             playScreen.setState(GAME_OVER);
-            if(lastScore >= Settings.highScores[6])
-                playScreen.setScoreString("NEW HIGHSCORE:"+lastScore);
+            if (lastScore >= Settings.highScores[6])
+                playScreen.setScoreString("NEW HIGHSCORE:" + lastScore);
             else
-                playScreen.setScoreString("SCORE : "+ lastScore);
+                playScreen.setScoreString("SCORE : " + lastScore);
             Settings.addScore(lastScore);
             Settings.save();
         }
@@ -158,10 +157,8 @@ public class PlayScreenController extends ScreenAdapter {
     /**
      * If the game is over and one click is considered as input it will set the screen to mainscreen
      */
-    private void updateGameOver()
-    {
-        if(Gdx.input.justTouched())
-        {
+    private void updateGameOver() {
+        if (Gdx.input.justTouched()) {
             playScreen.getGame().setScreen(new MainMenuScreenController(playScreen.getGame()));
         }
     }
@@ -169,10 +166,8 @@ public class PlayScreenController extends ScreenAdapter {
     /**
      * iF the state of the game is LEVEL_END than at one click it will jump to next level
      */
-    private void updateLevelEnd()
-    {
-        if(Gdx.input.justTouched())
-        {
+    private void updateLevelEnd() {
+        if (Gdx.input.justTouched()) {
             playScreen.getControl().setScore(lastScore);
             //TODO
             //change the arg of setScreen to next level
@@ -188,7 +183,7 @@ public class PlayScreenController extends ScreenAdapter {
 
     @Override
     public void pause() {
-        if(playScreen.getState() == RUNNING)
+        if (playScreen.getState() == RUNNING)
             playScreen.setState(PAUSED);
     }
 }
