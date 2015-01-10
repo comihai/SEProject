@@ -58,6 +58,16 @@ public class Assets {
     public static TextureRegion hollowRegion;
     public static Texture gameOver;
     public static TextureRegion gameOverRegion;
+    public static Texture help1;
+    public static TextureRegion helpRegion1;
+    public static Texture help2;
+    public static TextureRegion helpRegion2;
+    public static Texture help3;
+    public static TextureRegion helpRegion3;
+    public static Texture help4;
+    public static TextureRegion helpRegion4;
+    public static Texture help5;
+    public static TextureRegion helpRegion5;
 
 
     public static Texture loadTexture(String file) {
@@ -114,6 +124,16 @@ public class Assets {
         hollowRegion = new TextureRegion(hollow, 0, 0, 300, 256);
         gameOver = loadTexture("images/gameOver.png");
         gameOverRegion = new TextureRegion(gameOver, 0, 0, 512, 512);
+        help1 = loadTexture("images/help1.png");
+        helpRegion1 = new TextureRegion(help1, 0, 0, 482, 602);
+        help2 = loadTexture("images/help2.png");
+        helpRegion2 = new TextureRegion(help2, 0, 0, 482, 602);
+        help3 = loadTexture("images/help3.png");
+        helpRegion3 = new TextureRegion(help3, 0, 0, 482, 602);
+        help4 = loadTexture("images/help4.png");
+        helpRegion4 = new TextureRegion(help4, 0, 0, 482, 602);
+        help5 = loadTexture("images/help5.png");
+        helpRegion5 = new TextureRegion(help5, 0, 0, 482, 602);
 
     }
 }

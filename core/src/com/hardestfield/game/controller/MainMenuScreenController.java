@@ -73,6 +73,11 @@ public class MainMenuScreenController extends ScreenAdapter {
             if (mms.getPlayBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y)) {
                 mms.getGame().setScreen(new PlayScreenController(mms.getGame()));
             }
+            //check if is clicked the help option
+            if(mms.getHelpBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y))
+            {
+                mms.getGame().setScreen(new HelpScreenAcornController(mms.getGame()));
+            }
             //check if is clicked the highscores option
             if (mms.getHighScoresBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y)) {
                 mms.getGame().setScreen(new HighScoresController(mms.getGame()));
