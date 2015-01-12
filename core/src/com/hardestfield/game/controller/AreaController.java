@@ -31,13 +31,16 @@ public class AreaController {
     public Hollow hollow;
     public final Random rand;
     int state = STATE_RUNNING;
-    int score = 0;
+    int score;
     float heightSoFar;
+    int boost;
 
     /**
      * Generic Constructor
      */
-    public AreaController() {
+    public AreaController(int score, int level) {
+        this.boost = level + 1;
+        this.score = score;
         this.squirrels = new ArrayList<Squirrel>();
         Squirrel squirrel = new Squirrel(5, 1);
         this.squirrels.add(squirrel);
@@ -55,8 +58,9 @@ public class AreaController {
 
     /**
      * This function populates the list of bats
-     * @param x  position on the x axis
-     * @param y  position on the y axis
+     *
+     * @param x position on the x axis
+     * @param y position on the y axis
      */
     private void generateBat(float x, float y) {
         Bat bat = new Bat(x + rand.nextFloat(), y + Bat.BAT_HEIGHT + rand.nextFloat() * 2);
@@ -65,8 +69,9 @@ public class AreaController {
 
     /**
      * This function populates the list of beehives
-     * @param x  position on the x axis
-     * @param y  position on the y axis
+     *
+     * @param x position on the x axis
+     * @param y position on the y axis
      */
     private void generateBeehive(float x, float y) {
         Beehive beehive = new Beehive(x, y + Branch.BRANCH_HEIGHT / 2 + Beehive.BEEHIVE_HEIGHT / 2);
@@ -75,8 +80,9 @@ public class AreaController {
 
     /**
      * This function populates the list of acorns
-     * @param x  position on the x axis
-     * @param y  position on the y axis
+     *
+     * @param x position on the x axis
+     * @param y position on the y axis
      */
     private void generateAcorn(float x, float y) {
         Acorn acorn = new Acorn(x + rand.nextFloat(), y + Acorn.ACORN_HEIGHT + rand.nextFloat() * 3);
@@ -85,8 +91,9 @@ public class AreaController {
 
     /**
      * This function populates the list of acorns with leaf
-     * @param x  position on the x axis
-     * @param y  position on the y axis
+     *
+     * @param x position on the x axis
+     * @param y position on the y axis
      */
     private void generateAcornLeaf(float x, float y) {
         AcornLeaf acornLeaf = new AcornLeaf(x + rand.nextFloat(), y + Acorn.ACORN_HEIGHT + rand.nextFloat() * 3);
@@ -120,7 +127,6 @@ public class AreaController {
                     generateAcornLeaf(x, y);
                 }
             }
-
             y += (maxJumpHeight - rand.nextFloat() * (maxJumpHeight / 3));
         }
         hollow = new Hollow(4.5f, y);
@@ -128,11 +134,12 @@ public class AreaController {
 
     /**
      * THis function updates all object in the area
+     *
      * @param deltaTime The time interval for updating
      * @param accelX    The acceleration for the squirrel
      */
     public void update(float deltaTime, float accelX) {
-        if(squirrels.isEmpty())
+        if (squirrels.isEmpty())
             return;
         updateSquirrel(deltaTime, accelX);
         updateBats(deltaTime);
@@ -147,11 +154,12 @@ public class AreaController {
 
     /**
      * This function updates the state of the squirrel
+     *
      * @param deltaTime The time interval for updating
      * @param accelX    The acceleration for the squirrel
      */
     private void updateSquirrel(float deltaTime, float accelX) {
-        if(squirrels.isEmpty())
+        if (squirrels.isEmpty())
             return;
         if (squirrels.get(0).getState() != Squirrel.STATE_HIT && squirrels.get(0).position.y <= 0.5f) {
             squirrels.get(0).speed.y = Squirrel.JUMP_VELOCITY;
@@ -166,30 +174,33 @@ public class AreaController {
 
     /**
      * This function updates the state of the list of the bats
+     *
      * @param deltaTime The time interval for updating
      */
     private void updateBats(float deltaTime) {
         int len = bats.size();
         for (int i = 0; i < len; i++) {
             Bat bat = bats.get(i);
-            bat.update(deltaTime, rand.nextFloat() * 2);
+            bat.update(deltaTime, rand.nextFloat() * (boost * 3));
         }
     }
 
     /**
      * This function updates the state of the list of the bracnes
+     *
      * @param deltaTime The time interval for updating
      */
     private void updateBranches(float deltaTime) {
         int len = branches.size();
         for (int i = 0; i < len; i++) {
             Branch branch = branches.get(i);
-            branch.update(deltaTime);
+            branch.update(deltaTime, boost * 2);
         }
     }
 
     /**
      * This function updates the state of the list of the acorns
+     *
      * @param deltaTime The time interval for updating
      */
     private void updateAcorns(float deltaTime) {
@@ -202,6 +213,7 @@ public class AreaController {
 
     /**
      * This function updates the state of the list of the acorns with leaf
+     *
      * @param deltaTime The time interval for updating
      */
     private void updateAcornLeafs(float deltaTime) {
@@ -220,7 +232,7 @@ public class AreaController {
         checkBeehivesCollisions();
         checkAcornCollisions();
         checkAcornLeafCollisions();
-        //checkBatsCollisions();
+        checkBatsCollisions();
         checkHollowCollisions();
     }
 
@@ -228,7 +240,7 @@ public class AreaController {
      * This function verifies if the squirrel collides one brach
      */
     private void checkBranchesCollisions() {
-        if(squirrels.isEmpty())
+        if (squirrels.isEmpty())
             return;
         if (squirrels.get(0).speed.y > 0) return;
         int len = branches.size();
@@ -247,7 +259,7 @@ public class AreaController {
      * This function verifies if the squirrel collides one beehive
      */
     private void checkBeehivesCollisions() {
-        if(squirrels.isEmpty())
+        if (squirrels.isEmpty())
             return;
         if (squirrels.get(0).speed.y > 0) return;
         int len = beehives.size();
@@ -265,7 +277,7 @@ public class AreaController {
      * This function verifies if the squirrel collides one acorn
      */
     private void checkAcornCollisions() {
-        if(squirrels.isEmpty())
+        if (squirrels.isEmpty())
             return;
         int len = acorns.size();
         for (int i = 0; i < len; i++) {
@@ -282,7 +294,7 @@ public class AreaController {
      * This function verifies if the squirrel collides one acorn with leaf
      */
     private void checkAcornLeafCollisions() {
-        if(squirrels.isEmpty())
+        if (squirrels.isEmpty())
             return;
         int len = acornLeafs.size();
         for (int i = 0; i < len; i++) {
@@ -299,7 +311,7 @@ public class AreaController {
      * This function verifies if the squirrel collides one bat
      */
     private void checkBatsCollisions() {
-        if(squirrels.isEmpty())
+        if (squirrels.isEmpty())
             return;
         int len = bats.size();
         for (int i = 0; i < len; i++) {
@@ -314,7 +326,7 @@ public class AreaController {
      * This function verifies if the squirrel collides the final hollow
      */
     private void checkHollowCollisions() {
-        if(squirrels.isEmpty())
+        if (squirrels.isEmpty())
             return;
         Squirrel squirrel = squirrels.get(0);
         if (hollow.bounds.overlaps(squirrel.bounds)) {
@@ -327,7 +339,7 @@ public class AreaController {
      * This function verifies if the squirrel has died
      */
     private void checkGameOver() {
-        if(squirrels.isEmpty())
+        if (squirrels.isEmpty())
             return;
         if (heightSoFar - 7.5f > squirrels.get(0).position.y) {
             state = STATE_GAME_OVER;
@@ -336,6 +348,7 @@ public class AreaController {
 
     /**
      * Getters and Setters
+     *
      * @return
      */
     public int getScore() {

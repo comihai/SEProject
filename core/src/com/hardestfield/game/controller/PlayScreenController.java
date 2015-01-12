@@ -23,16 +23,17 @@ public class PlayScreenController extends ScreenAdapter {
     final int GAME_OVER = 4;
     int lastScore;
 
+
     /**
      * Generic Constructor
      *
      * @param game This variable creates and loads all the resources of the game
      */
-    public PlayScreenController(HardestField game) {
+    public PlayScreenController(HardestField game, int score, int level) {
 
-        playScreen = new PlayScreen(game);
-        lastScore = 0;
-        playScreen.setScoreString("SCORE : 0");
+        playScreen = new PlayScreen(game, score, level);
+        lastScore = score;
+        playScreen.setScoreString("SCORE : " + lastScore);
     }
 
     /**
@@ -114,8 +115,10 @@ public class PlayScreenController extends ScreenAdapter {
          */
         if (playScreen.getControl().getState() == AreaController.STATE_NEXT_LEVEL) {
             playScreen.setState(LEVEL_END);
-            Settings.addScore(lastScore);
-            Settings.save();
+            if(playScreen.getLevelNumber() == 2) {
+                Settings.addScore(lastScore);
+                Settings.save();
+            }
 
 
         }
@@ -169,9 +172,19 @@ public class PlayScreenController extends ScreenAdapter {
     private void updateLevelEnd() {
         if (Gdx.input.justTouched()) {
             playScreen.getControl().setScore(lastScore);
-            //TODO
-            //change the arg of setScreen to next level
-            playScreen.getGame().setScreen(new MainMenuScreenController(playScreen.getGame()));
+            switch (playScreen.getLevelNumber())
+            {
+                case 0 :
+                    playScreen.getGame().setScreen(new PlayScreenController(playScreen.getGame(),lastScore,1));
+                    break;
+                case 1 :
+                    playScreen.getGame().setScreen(new PlayScreenController(playScreen.getGame(),lastScore,2));
+                    break;
+                case 2 :
+                    playScreen.getGame().setScreen(new MainMenuScreenController(playScreen.getGame()));
+                    break;
+            }
+
         }
     }
 

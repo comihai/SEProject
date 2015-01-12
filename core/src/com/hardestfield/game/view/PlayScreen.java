@@ -26,6 +26,8 @@ public class PlayScreen {
     int state;
     String scoreString;
     String pause;
+    int levelNumber;
+    String levelDisplay;
 
     public static final int READY = 0;
     public static final int RUNNING = 1;
@@ -38,8 +40,9 @@ public class PlayScreen {
      *
      * @param game This variable creates and loads all the resources of the game
      */
-    public PlayScreen(HardestField game) {
+    public PlayScreen(HardestField game, int score, int level) {
         this.game = game;
+        levelNumber = level;
         state = READY;
         guiCamera = new OrthographicCamera(320, 480);
         guiCamera.position.set(160, 240, 0);
@@ -47,9 +50,10 @@ public class PlayScreen {
         quitBounds = new Rectangle(278, 439, 34, 33);
         pauseBounds = new Rectangle(281, 439, 30, 33);
         resumeBounds = new Rectangle(240, 439, 34, 33);
-        control = new AreaController();
+        control = new AreaController(score, level);
         areaRenderer = new Area(game.batch, control);
         pause = "PAUSE";
+        levelDisplay = "LEVEL " + (level + 1);
     }
 
     /**
@@ -100,6 +104,7 @@ public class PlayScreen {
 
         game.batch.draw(Assets.pauseRegion, 340 - 64, 500 - 64, 40, 40);
         Assets.font.draw(game.batch, scoreString, 10, 465);
+        Assets.font.draw(game.batch, levelDisplay, 10, 25);
     }
 
     /**
@@ -107,6 +112,7 @@ public class PlayScreen {
      */
     private void paused() {
         Assets.font.draw(game.batch, scoreString, 10, 465);
+        Assets.font.draw(game.batch, levelDisplay, 10, 25);
         Assets.font.draw(game.batch, pause, 115, 120);
         game.batch.draw(Assets.quitGameRegion, 340 - 64, 500 - 64, 40, 40);
         game.batch.draw(Assets.playRegion, 340 - 104, 500 - 64, 40, 40);
@@ -116,7 +122,8 @@ public class PlayScreen {
      * This function draws a texture region for gameOver state of the game and prints the score / new highscore
      */
     private void gameOver() {
-        Assets.font.draw(game.batch, scoreString, 5, 465);
+        Assets.font.draw(game.batch, scoreString, 10, 465);
+        Assets.font.draw(game.batch, levelDisplay, 10, 25);
         game.batch.draw(Assets.gameOver, 60, 240 - 96 / 2, 200, 180);
     }
 
@@ -124,7 +131,7 @@ public class PlayScreen {
      * This function draws a texture region for gameOver state of the game and prints the score / new highscore
      */
     private void levelEnd() {
-        String Text = "LEVEL FINISHED!";
+        String Text = levelNumber < 2 ? "LEVEL FINISHED!" : "GAME FINISHED!";
         Assets.font.draw(game.batch, Text, 30, 440);
     }
 
@@ -212,5 +219,13 @@ public class PlayScreen {
 
     public void setScoreString(String scoreString) {
         this.scoreString = scoreString;
+    }
+
+    public int getLevelNumber() {
+        return levelNumber;
+    }
+
+    public void setLevelNumber(int levelNumber) {
+        this.levelNumber = levelNumber;
     }
 }

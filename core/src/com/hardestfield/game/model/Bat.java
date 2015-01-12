@@ -49,6 +49,7 @@ public class Bat extends DynamicGameObject {
 
     /**
      * Getters and Setters
+     *
      * @return
      */
     public float getStateTime() {
