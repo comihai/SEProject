@@ -11,6 +11,7 @@ public class Settings {
 
     public static boolean soundEnabled = true;
     public static boolean musicEnabled = true;
+    public static String[] nameHighScores = new String[] {"unamed","unamed","unamed","unamed","unamed","unamed","unamed"};
     public static int[] highScores = new int[] {0,0,0,0,0,0,0};
     static String file = ".highScoresHardestField";
 
@@ -26,7 +27,12 @@ public class Settings {
             soundEnabled = Boolean.parseBoolean(strings[0]);
             musicEnabled = Boolean.parseBoolean(strings[1]);
             for (int i = 0; i < 7; i++) {
-                highScores[i] = Integer.parseInt(strings[i+2]);
+                String[] splits = strings[i+2].split(" ");
+                if(strings[i+2].length() - splits[splits.length - 1].length() - 1 >= 10)
+                    nameHighScores[i] = strings[i+2].substring(0,10).toUpperCase();
+                else
+                    nameHighScores[i] = splits[0].toUpperCase();
+                highScores[i] = Integer.parseInt(splits[splits.length - 1]);
             }
         }
         catch (Throwable e)
@@ -45,7 +51,7 @@ public class Settings {
             fileHandle.writeString(Boolean.toString(soundEnabled)+"\n", false);
             fileHandle.writeString(Boolean.toString(musicEnabled)+"\n", true);
             for (int i = 0; i < 7; i++) {
-                fileHandle.writeString(Integer.toString(highScores[i])+"\n", true);
+                fileHandle.writeString(nameHighScores[i] +" "+Integer.toString(highScores[i])+"\n", true);
             }
         }
         catch (Throwable e) {
@@ -56,12 +62,15 @@ public class Settings {
      * This function decides whether there is a higher score than those saved
      * @param score The score that is compared and saved if higher
      */
-    public static void addScore (int score) {
+    public static void addScore (int score, String namePlayer) {
         for (int i = 0; i < 7; i++) {
             if (highScores[i] < score) {
-                for (int j = 6; j > i; j--)
+                for (int j = 6; j > i; j--) {
                     highScores[j] = highScores[j - 1];
+                    nameHighScores[j] = nameHighScores[j-1];
+                }
                 highScores[i] = score;
+                nameHighScores[i] = namePlayer;
                 break;
             }
         }

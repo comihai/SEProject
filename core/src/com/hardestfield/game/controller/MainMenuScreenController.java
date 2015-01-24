@@ -38,7 +38,6 @@ public class MainMenuScreenController extends ScreenAdapter {
 
             //TODO
             //redraw the menu for multiplayer option
-            //write code for help option
 
             //controls the volume of the music
             if (mms.getSoundBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y)) {

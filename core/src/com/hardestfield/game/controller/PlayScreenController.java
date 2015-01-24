@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.hardestfield.game.HardestField;
 import com.hardestfield.game.utils.Settings;
 import com.hardestfield.game.view.PlayScreen;
@@ -23,6 +24,7 @@ public class PlayScreenController extends ScreenAdapter {
     final int GAME_OVER = 4;
     int lastScore;
 
+    private Stage stage;
 
     /**
      * Generic Constructor
@@ -34,6 +36,10 @@ public class PlayScreenController extends ScreenAdapter {
         playScreen = new PlayScreen(game, score, level);
         lastScore = score;
         playScreen.setScoreString("SCORE : " + lastScore);
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        stage.addActor(playScreen.getTextField());
+        stage.addActor(playScreen.getBtnSave());
     }
 
     /**
@@ -116,8 +122,7 @@ public class PlayScreenController extends ScreenAdapter {
         if (playScreen.getControl().getState() == AreaController.STATE_NEXT_LEVEL) {
             playScreen.setState(LEVEL_END);
             if(playScreen.getLevelNumber() == 2) {
-                Settings.addScore(lastScore);
-                Settings.save();
+                playScreen.setScore(lastScore);
             }
 
 
@@ -131,8 +136,7 @@ public class PlayScreenController extends ScreenAdapter {
                 playScreen.setScoreString("NEW HIGHSCORE:" + lastScore);
             else
                 playScreen.setScoreString("SCORE : " + lastScore);
-            Settings.addScore(lastScore);
-            Settings.save();
+            playScreen.setScore(lastScore);
         }
     }
 
@@ -161,7 +165,8 @@ public class PlayScreenController extends ScreenAdapter {
      * If the game is over and one click is considered as input it will set the screen to mainscreen
      */
     private void updateGameOver() {
-        if (Gdx.input.justTouched()) {
+        //If it is end of game and the current score is less than the smaller value of highscores
+        if (Gdx.input.justTouched() && lastScore < Settings.highScores[6]) {
             playScreen.getGame().setScreen(new MainMenuScreenController(playScreen.getGame()));
         }
     }
@@ -191,7 +196,12 @@ public class PlayScreenController extends ScreenAdapter {
     @Override
     public void render(float delta) {
         update(delta);
+
         playScreen.draw();
+        if(playScreen.getState() == GAME_OVER || (playScreen.getState() == LEVEL_END && playScreen.getLevelNumber() == 2)) {
+            stage.act(delta);
+            stage.draw();
+        }
     }
 
     @Override

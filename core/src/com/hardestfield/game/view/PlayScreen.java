@@ -5,9 +5,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.hardestfield.game.HardestField;
 import com.hardestfield.game.controller.AreaController;
+import com.hardestfield.game.controller.MainMenuScreenController;
 import com.hardestfield.game.model.Assets;
+import com.hardestfield.game.utils.Settings;
+
 
 /**
  * Created by mihai on 12/13/2014.
@@ -28,6 +36,11 @@ public class PlayScreen {
     String pause;
     int levelNumber;
     String levelDisplay;
+    String namePlayer;
+    int score;
+    Skin skin ;
+    TextField textField;
+    TextButton btnSave;
 
     public static final int READY = 0;
     public static final int RUNNING = 1;
@@ -54,6 +67,35 @@ public class PlayScreen {
         areaRenderer = new Area(game.batch, control);
         pause = "PAUSE";
         levelDisplay = "LEVEL " + (level + 1);
+
+        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+        textField = new TextField("Insert your name here",skin);
+        textField.setPosition(95,450);
+        textField.setSize(180,30);
+        textField.setMaxLength(10);
+        textField.setTextFieldListener(new TextField.TextFieldListener() {
+            @Override
+            public void keyTyped(TextField textField, char c) {
+                namePlayer = textField.getText();
+            }
+
+        });
+
+        btnSave = new TextButton("Save Score",skin);
+        btnSave.setPosition(285 , 450);
+        btnSave.setSize(100, 30);
+        btnSave.addListener(new ClickListener(){
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                btnSaveClicked();
+            }
+        });
+    }
+    public void btnSaveClicked()
+    {
+        Settings.addScore(score, namePlayer.toUpperCase());
+        Settings.save();
+        game.setScreen(new MainMenuScreenController(game));
     }
 
     /**
@@ -125,6 +167,7 @@ public class PlayScreen {
         Assets.font.draw(game.batch, scoreString, 10, 465);
         Assets.font.draw(game.batch, levelDisplay, 10, 25);
         game.batch.draw(Assets.gameOver, 60, 240 - 96 / 2, 200, 180);
+
     }
 
     /**
@@ -227,5 +270,17 @@ public class PlayScreen {
 
     public void setLevelNumber(int levelNumber) {
         this.levelNumber = levelNumber;
+    }
+
+    public TextField getTextField() {
+        return textField;
+    }
+
+    public TextButton getBtnSave() {
+        return btnSave;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

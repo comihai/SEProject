@@ -31,10 +31,8 @@ public class HighScores {
         guiCam = new OrthographicCamera(320, 480);
         guiCam.position.set(160, 240, 0);
         scores = new String[7];
-        //TODO
-        //change the number with the name of the player
         for (int i = 0; i < 7; i++) {
-            scores[i] = i + 1 + ") " + Settings.highScores[i];
+            scores[i] = Settings.nameHighScores[i] + " " + Settings.highScores[i];
             offset = Math.max(Assets.font.getBounds(scores[i]).width, offset);
         }
         offset = 160 - offset / 2 + Assets.font.getSpaceWidth() / 2;
