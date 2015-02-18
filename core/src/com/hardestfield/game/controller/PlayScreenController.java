@@ -121,7 +121,7 @@ public class PlayScreenController extends ScreenAdapter {
          */
         if (playScreen.getControl().getState() == AreaController.STATE_NEXT_LEVEL) {
             playScreen.setState(LEVEL_END);
-            if(playScreen.getLevelNumber() == 2) {
+            if (playScreen.getLevelNumber() == 2) {
                 playScreen.setScore(lastScore);
             }
 
@@ -177,15 +177,14 @@ public class PlayScreenController extends ScreenAdapter {
     private void updateLevelEnd() {
         if (Gdx.input.justTouched()) {
             playScreen.getControl().setScore(lastScore);
-            switch (playScreen.getLevelNumber())
-            {
-                case 0 :
-                    playScreen.getGame().setScreen(new PlayScreenController(playScreen.getGame(),lastScore,1));
+            switch (playScreen.getLevelNumber()) {
+                case 0:
+                    playScreen.getGame().setScreen(new PlayScreenController(playScreen.getGame(), lastScore, 1));
                     break;
-                case 1 :
-                    playScreen.getGame().setScreen(new PlayScreenController(playScreen.getGame(),lastScore,2));
+                case 1:
+                    playScreen.getGame().setScreen(new PlayScreenController(playScreen.getGame(), lastScore, 2));
                     break;
-                case 2 :
+                case 2:
                     playScreen.getGame().setScreen(new MainMenuScreenController(playScreen.getGame()));
                     break;
             }
@@ -198,7 +197,7 @@ public class PlayScreenController extends ScreenAdapter {
         update(delta);
 
         playScreen.draw();
-        if(playScreen.getState() == GAME_OVER || (playScreen.getState() == LEVEL_END && playScreen.getLevelNumber() == 2)) {
+        if (playScreen.getState() == GAME_OVER || (playScreen.getState() == LEVEL_END && playScreen.getLevelNumber() == 2)) {
             stage.act(delta);
             stage.draw();
         }

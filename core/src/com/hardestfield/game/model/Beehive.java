@@ -10,8 +10,9 @@ public class Beehive extends GameObject {
 
     /**
      * Generic constructor
-     * @param x  position on the x axis
-     * @param y  position on the y axis
+     *
+     * @param x position on the x axis
+     * @param y position on the y axis
      */
     public Beehive(float x, float y) {
         super(x, y, BEEHIVE_WIDTH, BEEHIVE_HEIGHT);

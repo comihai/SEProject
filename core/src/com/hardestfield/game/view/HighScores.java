@@ -10,7 +10,7 @@ import com.hardestfield.game.utils.Settings;
 
 /**
  * Created by mihai on 12/23/2014.
- *
+ * <p/>
  * THis class aims the scores
  */
 public class HighScores {
@@ -23,6 +23,7 @@ public class HighScores {
 
     /**
      * Generic constructor
+     *
      * @param game This variable creates and loads all the resources of the game
      */
     public HighScores(HardestField game) {
@@ -41,8 +42,7 @@ public class HighScores {
     /**
      * This function draws the high scores page
      */
-    public void draw()
-    {
+    public void draw() {
         GL20 gl = Gdx.gl;
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         guiCam.update();
@@ -69,6 +69,7 @@ public class HighScores {
 
     /**
      * Getters and Setters
+     *
      * @return
      */
     public String[] getScores() {

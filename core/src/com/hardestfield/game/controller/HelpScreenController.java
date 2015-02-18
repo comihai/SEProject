@@ -18,13 +18,15 @@ abstract class HelpScreenController extends ScreenAdapter {
 
     /**
      * This constructor is used for derived classes
-     * @param game                 This variable creates and loads all the resources of the game
-     * @param screenDescription    This is the description of the image
+     *
+     * @param game              This variable creates and loads all the resources of the game
+     * @param screenDescription This is the description of the image
      */
     public HelpScreenController(HardestField game, String[] screenDescription) {
         helpScreen = new HelpScreen(game, screenDescription);
         nextBounds = new Rectangle(415, 0, 60, 60);
         touchPoint = new Vector3();
     }
+
     public abstract void update();
 }

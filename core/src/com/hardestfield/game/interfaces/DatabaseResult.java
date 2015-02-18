@@ -6,7 +6,10 @@ package com.hardestfield.game.interfaces;
  */
 public interface DatabaseResult {
     public boolean isEmpty();
+
     public boolean moveToNext();
+
     public int getColumnIndex(String name);
+
     public float getFloat(int columnIndex);
 }

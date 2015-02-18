@@ -19,8 +19,9 @@ public class Squirrel extends DynamicGameObject {
 
     /**
      * Generic constructor
-     * @param x  position on the x axis
-     * @param y  position on the y axis
+     *
+     * @param x position on the x axis
+     * @param y position on the y axis
      */
     public Squirrel(float x, float y) {
         super(x, y, SQUIRREL_WIDTH, SQUIRREL_HEIGHT);
@@ -30,6 +31,7 @@ public class Squirrel extends DynamicGameObject {
 
     /**
      * This function updates the position of the squirrel
+     *
      * @param deltaTime The time interval for updating
      */
     public void update(float deltaTime) {
@@ -95,6 +97,7 @@ public class Squirrel extends DynamicGameObject {
 
     /**
      * Getters and Setters
+     *
      * @return
      */
     public int getState() {

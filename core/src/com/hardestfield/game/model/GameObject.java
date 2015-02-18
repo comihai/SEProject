@@ -15,10 +15,10 @@ public class GameObject {
     /**
      * Generic Constructor
      *
-     * @param x         position on the x axis
-     * @param y         position on the y axis
-     * @param width     the width of the object
-     * @param height    the height of the object
+     * @param x      position on the x axis
+     * @param y      position on the y axis
+     * @param width  the width of the object
+     * @param height the height of the object
      */
     public GameObject(float x, float y, float width, float height) {
         this.position = new Vector2(x, y);

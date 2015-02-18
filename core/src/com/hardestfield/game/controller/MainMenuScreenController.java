@@ -36,9 +36,6 @@ public class MainMenuScreenController extends ScreenAdapter {
         if (Gdx.input.justTouched()) {
             mms.getGuiCam().unproject(mms.getTouchPoint().set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
-            //TODO
-            //redraw the menu for multiplayer option
-
             //controls the volume of the music
             if (mms.getSoundBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y)) {
                 if (temp == 1) {
@@ -70,11 +67,10 @@ public class MainMenuScreenController extends ScreenAdapter {
             }
             //check if is clicked the play option
             if (mms.getPlayBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y)) {
-                mms.getGame().setScreen(new PlayScreenController(mms.getGame(),0,0));
+                mms.getGame().setScreen(new PlayScreenController(mms.getGame(), 0, 0));
             }
             //check if is clicked the help option
-            if(mms.getHelpBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y))
-            {
+            if (mms.getHelpBounds().contains(mms.getTouchPoint().x, mms.getTouchPoint().y)) {
                 mms.getGame().setScreen(new HelpScreenAcornController(mms.getGame()));
             }
             //check if is clicked the highscores option

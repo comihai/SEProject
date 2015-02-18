@@ -6,11 +6,11 @@ import com.hardestfield.game.interfaces.DatabaseResult;
  * Created by mihai on 1/24/2015.
  * THis class that needs to be implemented on Android and Desktop applications
  */
-public abstract class DataBase implements DatabaseResult{
+public abstract class DataBase implements DatabaseResult {
 
-    protected static String databaseName="HardestField";
+    protected static String databaseName = "HardestField";
     protected static DataBase instance = null;
-    protected static int version=1;
+    protected static int version = 1;
 
     //Runs a sql query like "create".
     public abstract void execute(String sql);
@@ -21,12 +21,12 @@ public abstract class DataBase implements DatabaseResult{
     //Runs a query and returns an Object with all the results of the query. [Result Interface is defined below]
     public abstract DatabaseResult query(String sql);
 
-    public void onCreate(){
+    public void onCreate() {
         execute("CREATE TABLE 'highscores' ('_id' INTEGER PRIMARY KEY  NOT NULL , 'name' VARCHAR NOT NULL , 'score' INTEGER NOT NULL );");
         execute("INSERT INTO 'highscores'(name,score) values ('Mihai',2000)");
     }
 
-    public void onUpgrade(){
+    public void onUpgrade() {
         execute("DROP TABLE IF EXISTS 'highscores';");
         onCreate();
     }

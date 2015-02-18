@@ -8,7 +8,7 @@ import com.hardestfield.game.view.HighScores;
 
 /**
  * Created by mihai on 12/23/2014.
- *
+ * <p/>
  * This class controls the highscores page
  */
 public class HighScoresController extends ScreenAdapter {
@@ -19,6 +19,7 @@ public class HighScoresController extends ScreenAdapter {
 
     /**
      * Generic constructor
+     *
      * @param game This variable creates and loads all the resources of the game
      */
     public HighScoresController(HardestField game) {
@@ -30,12 +31,11 @@ public class HighScoresController extends ScreenAdapter {
     /**
      * Check if the back button is clicked
      */
-    public void update(){
-        if(Gdx.input.justTouched())
-        {
+    public void update() {
+        if (Gdx.input.justTouched()) {
             highScores.getGuiCam().unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
-            if(highScores.getBackBounds().contains(touchPoint.x,touchPoint.y)){
+            if (highScores.getBackBounds().contains(touchPoint.x, touchPoint.y)) {
                 highScores.getGame().setScreen(new MainMenuScreenController(highScores.getGame()));
                 return;
             }

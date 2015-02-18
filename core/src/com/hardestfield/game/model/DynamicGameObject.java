@@ -12,10 +12,11 @@ public class DynamicGameObject extends GameObject {
 
     /**
      * Generic constructor
-     * @param x         position on the x axis
-     * @param y         position on the y axis
-     * @param width     the width of the object
-     * @param height    the height of the object
+     *
+     * @param x      position on the x axis
+     * @param y      position on the y axis
+     * @param width  the width of the object
+     * @param height the height of the object
      */
     public DynamicGameObject(float x, float y, float width, float height) {
         super(x, y, width, height);

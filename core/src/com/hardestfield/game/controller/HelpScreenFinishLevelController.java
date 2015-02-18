@@ -9,7 +9,7 @@ import com.hardestfield.game.HardestField;
  */
 public class HelpScreenFinishLevelController extends HelpScreenController {
 
-    private static String[] screenDescription = {"THE TREE REPRESENTS","THE END OF THE LEVEL"};
+    private static String[] screenDescription = {"THE TREE REPRESENTS", "THE END OF THE LEVEL"};
 
     public HelpScreenFinishLevelController(HardestField game) {
         super(game, screenDescription);

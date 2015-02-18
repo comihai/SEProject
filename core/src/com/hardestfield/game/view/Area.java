@@ -23,8 +23,9 @@ public class Area {
 
     /**
      * Generic Constructor
-     * @param batch  Draws batched quads using indices
-     * @param area   Instance of class Area used for accessing objects that exist in the game area
+     *
+     * @param batch Draws batched quads using indices
+     * @param area  Instance of class Area used for accessing objects that exist in the game area
      */
     public Area(SpriteBatch batch, AreaController area) {
         this.area = area;
@@ -37,7 +38,7 @@ public class Area {
      * This function sets the position of the camera and the projection matrix
      */
     public void render() {
-        if(area.squirrels.isEmpty())
+        if (area.squirrels.isEmpty())
             return;
         if (area.squirrels.get(0).position.y > cam.position.y) cam.position.y = area.squirrels.get(0).position.y;
         cam.update();
@@ -77,7 +78,7 @@ public class Area {
      * THis function draws the frames of the squirrel
      */
     private void renderSquirrel() {
-        if(area.squirrels.isEmpty())
+        if (area.squirrels.isEmpty())
             return;
         TextureRegion keyFrame;
         switch (area.squirrels.get(0).getState()) {
@@ -168,7 +169,7 @@ public class Area {
      */
     private void renderHollow() {
         Hollow hollow = area.hollow;
-        batch.draw(Assets.hollowRegion, hollow.position.x-2, hollow.position.y-2, 5, 5);
+        batch.draw(Assets.hollowRegion, hollow.position.x - 2, hollow.position.y - 2, 5, 5);
     }
 
 }

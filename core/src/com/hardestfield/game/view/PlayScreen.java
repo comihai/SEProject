@@ -38,7 +38,7 @@ public class PlayScreen {
     String levelDisplay;
     String namePlayer;
     int score;
-    Skin skin ;
+    Skin skin;
     TextField textField;
     TextButton btnSave;
 
@@ -69,9 +69,9 @@ public class PlayScreen {
         levelDisplay = "LEVEL " + (level + 1);
 
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-        textField = new TextField("Insert your name here",skin);
-        textField.setPosition(95,450);
-        textField.setSize(180,30);
+        textField = new TextField("Insert your name here", skin);
+        textField.setPosition(95, 450);
+        textField.setSize(180, 30);
         textField.setMaxLength(10);
         textField.setTextFieldListener(new TextField.TextFieldListener() {
             @Override
@@ -81,18 +81,18 @@ public class PlayScreen {
 
         });
 
-        btnSave = new TextButton("Save Score",skin);
-        btnSave.setPosition(285 , 450);
+        btnSave = new TextButton("Save Score", skin);
+        btnSave.setPosition(285, 450);
         btnSave.setSize(100, 30);
-        btnSave.addListener(new ClickListener(){
+        btnSave.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 btnSaveClicked();
             }
         });
     }
-    public void btnSaveClicked()
-    {
+
+    public void btnSaveClicked() {
         Settings.addScore(score, namePlayer.toUpperCase());
         Settings.save();
         game.setScreen(new MainMenuScreenController(game));

@@ -2,7 +2,7 @@ package com.hardestfield.game.model;
 
 /**
  * Created by mihai on 1/1/2015.
- *
+ * <p/>
  * This class is for finishing the game or moving to the next level
  */
 public class Hollow extends GameObject {
@@ -12,10 +12,11 @@ public class Hollow extends GameObject {
 
     /**
      * Generic constructor
-     * @param x  position on the x axis
-     * @param y  position on the y axis
+     *
+     * @param x position on the x axis
+     * @param y position on the y axis
      */
-    public Hollow (float x, float y) {
+    public Hollow(float x, float y) {
         super(x, y, HOLLOW_WIDTH, HOLLOW_HEIGHT);
     }
 }

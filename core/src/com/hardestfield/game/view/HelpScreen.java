@@ -13,7 +13,7 @@ import com.hardestfield.game.model.Assets;
 public class HelpScreen {
     HardestField game;
     OrthographicCamera guiCam;
-    String [] title;
+    String[] title;
 
     /**
      * Generic Constructor
@@ -25,7 +25,7 @@ public class HelpScreen {
         guiCam = new OrthographicCamera();
         guiCam.setToOrtho(false, 482, 602);
         title = new String[1];
-        title[0]= "COLLECT ACORN TO WIN 10 PTS!";
+        title[0] = "COLLECT ACORN TO WIN 10 PTS!";
     }
 
     /**
@@ -33,7 +33,7 @@ public class HelpScreen {
      *
      * @param game This variable creates and loads all the resources of the game
      */
-    public HelpScreen(HardestField game, String [] string) {
+    public HelpScreen(HardestField game, String[] string) {
         this.game = game;
         guiCam = new OrthographicCamera();
         guiCam.setToOrtho(false, 482, 602);
@@ -53,21 +53,20 @@ public class HelpScreen {
         game.batch.setProjectionMatrix(guiCam.combined);
         game.batch.disableBlending();
         game.batch.begin();
-        switch (screenNumber)
-        {
-            case 1 :
+        switch (screenNumber) {
+            case 1:
                 game.batch.draw(Assets.helpRegion1, 0, 0);
                 break;
-            case 2 :
+            case 2:
                 game.batch.draw(Assets.helpRegion2, 0, 0);
                 break;
-            case 3 :
+            case 3:
                 game.batch.draw(Assets.helpRegion3, 0, 0);
                 break;
-            case 4 :
+            case 4:
                 game.batch.draw(Assets.helpRegion4, 0, 0);
                 break;
-            default :
+            default:
                 game.batch.draw(Assets.helpRegion5, 0, 0);
                 break;
         }
@@ -77,7 +76,7 @@ public class HelpScreen {
         game.batch.begin();
         game.batch.draw(Assets.playRegion, 410, 0, 64, 64);
         for (int i = 0; i < title.length; i++) {
-            Assets.font.draw(game.batch, title[i], 5 + Math.abs(28 - title[i].length())*8, yCoord-25*i);
+            Assets.font.draw(game.batch, title[i], 5 + Math.abs(28 - title[i].length()) * 8, yCoord - 25 * i);
         }
         game.batch.end();
     }

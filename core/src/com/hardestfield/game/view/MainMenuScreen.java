@@ -28,6 +28,7 @@ public class MainMenuScreen {
 
     /**
      * Generic constructor
+     *
      * @param game This variable creates and loads all the resources of the game
      */
     public MainMenuScreen(HardestField game) {
@@ -70,6 +71,7 @@ public class MainMenuScreen {
 
     /**
      * Getters and Setters
+     *
      * @return
      */
     public OrthographicCamera getGuiCam() {
